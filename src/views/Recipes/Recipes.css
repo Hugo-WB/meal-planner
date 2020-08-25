@@ -1,0 +1,11 @@
+.recipeGrid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+  gap: 4px;
+  grid-auto-rows: min-content;
+  align-items: center;
+  justify-items: center;
+}
+.recipeGrid > div {
+  margin: 10px;
+}
