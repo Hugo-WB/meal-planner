@@ -12,7 +12,6 @@ export class App extends Component {
       path: "/",
       component: Homepage,
     },
-
     {
       path: "/dashboard",
       component: Dashboard,

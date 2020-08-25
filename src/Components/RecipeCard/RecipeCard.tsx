@@ -1,12 +1,15 @@
 import React, { Component } from "react";
-import { Card, Image, Modal } from "semantic-ui-react";
+import { Card, Image, Modal, Header, List } from "semantic-ui-react";
 
 interface Props {
   name: string;
   imageSrc: string;
   category?: string;
   description: string;
+  ingredients: string[];
+  steps?: string;
 }
+
 interface State {
   showModal: boolean;
 }
@@ -38,6 +41,20 @@ export default class RecipeCard extends Component<Props, State> {
           </Modal.Header>
           <Modal.Content image>
             <Image size = "medium" src = {this.props.imageSrc} />
+            <Modal.Description>
+              <Header>
+                Ingredients:
+              </Header>
+              <List bulleted>
+                {this.props.ingredients.map((ingredient) => 
+                  <List.Item>{ingredient}</List.Item>
+                )}
+              </List>
+              <Header>
+                Steps:
+              </Header>
+              <p>{this.props.steps}</p>
+            </Modal.Description>
           </Modal.Content>
         </Modal>
       </div>
