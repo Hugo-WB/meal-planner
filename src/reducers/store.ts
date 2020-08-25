@@ -1,6 +1,6 @@
 import { combineReducers, createStore } from "redux";
-import { firebaseReducer,FirebaseReducer } from "react-redux-firebase";
-import { firestoreReducer} from "redux-firestore";
+import { firebaseReducer, FirebaseReducer } from "react-redux-firebase";
+import { firestoreReducer } from "redux-firestore";
 import localData from "./localData";
 
 // interface Recipe {
@@ -27,9 +27,8 @@ import localData from "./localData";
 
 // interface RootState {
 //   firebase: FirebaseReducer.Reducer<Schema>,
-//   firestore:any, 
+//   firestore:any,
 // }
-
 
 const rootReducer = combineReducers({
   firebase: firebaseReducer,

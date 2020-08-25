@@ -1,5 +1,5 @@
 import firebase from "firebase/app";
-import "firebase/firestore"
+import "firebase/firestore";
 const config = {
   apiKey: "AIzaSyDWK00mcybySnW_JgfsBCqZbeTPkUP4DEY",
   authDomain: "meal-planner-92a60.firebaseapp.com",

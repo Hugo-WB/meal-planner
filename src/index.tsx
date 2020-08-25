@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { createStore } from "redux";
 import "semantic-ui-css/semantic.min.css";
 
-import firebase from "./firebase"
+import firebase from "./firebase";
 import "firebase/firestore";
 import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 import { createFirestoreInstance } from "redux-firestore";
