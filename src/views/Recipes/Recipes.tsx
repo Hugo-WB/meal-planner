@@ -11,23 +11,26 @@ import "./Recipes.css"
 interface Props {}
 interface State {}
 
-const Recipes: React.FC<Props> = () =>{
+const RecipeCards:React.FC = () =>{
     useFirestoreConnect([{collection:"recipes"}])
     const recipes = useSelector((state:any) => state.firestore.ordered.recipes)
     console.log(recipes)
     console.log(typeof recipes)
-    // const recipeCards = recipes.map((recipe:any)=>{console.log(recipe.name)})
-    // const recipeCards = () =>{
-    //   recipes.map((recipe:any) =>  
-    //   //  MAKE THE RECIPE TYPED INTERFACE
-    //     <RecipeCard
-    //       name={recipe.name}
-    //       imageSrc={recipe.imageSrc}
-    //       description={recipe.description}
-    //       ingredients = {recipe.Ingredients}
-    //     />
-    //   )
-    // }
+    if (recipes == undefined){
+      return (<div></div>)
+    }else{
+      return recipes.map((recipe:any)=>
+        <RecipeCard
+          name={recipe.name}
+          imageSrc={recipe.imageSrc}
+          description={recipe.description}
+          ingredients = {recipe.ingredients}
+        />
+      )
+    }
+}
+
+const Recipes: React.FC<Props> = () =>{
     return (
       <div>
         <TopNav />
@@ -39,7 +42,7 @@ const Recipes: React.FC<Props> = () =>{
               description="bruhdafja;fjajfafafadfafd"
               ingredients = {["test"," test2"]}
             />
-            {/* {recipedCards} */}
+            <RecipeCards />
           </div>
         </Container>
       </div>

@@ -30,6 +30,7 @@ import localData from "./localData";
 //   firestore:any, 
 // }
 
+
 const rootReducer = combineReducers({
   firebase: firebaseReducer,
   firestore: firestoreReducer,
