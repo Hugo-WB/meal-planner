@@ -1,58 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
-  );
+import Homepage from "./views/Homepage/Homepage";
+import Dashboard from "./views/Dashboard/Dashboard";
+import Recipes from "./views/Recipes/Recipes"
+import "./App.css";
+export class App extends Component {
+  routes = [
+    {
+      path: "/",
+      component: Homepage,
+    },
+    {
+      path: "/dashboard",
+      component: Dashboard,
+    },
+    {
+      path: "/recipes",
+      component: Recipes,
+    },
+  ];
+  render() {
+    return (
+      <div>
+        <Router>
+          <Switch>
+            {/* <Route path="/dashboard" component={Dashboard}></Route>
+            <Route path="/recipes"></Route>
+            <Route path="/shopping-list"></Route> */}
+            {this.routes.map((route) => (
+              <Route
+                path={route.path}
+                component={route.component}
+                exact={true}
+              />
+            ))}
+            <Route path="*" component={Homepage}></Route>
+          </Switch>
+        </Router>
+      </div>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = (state: any) => ({});
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
