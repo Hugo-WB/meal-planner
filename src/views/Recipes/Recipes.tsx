@@ -19,10 +19,13 @@ export class Recipes extends Component<Props, State> {
         <TopNav />
         <Container>
           <div className = "recipeGrid">
-            <Modal open = {false}>
-              <Modal.Header>Test</Modal.Header>
-            </Modal>
             <RecipeCard
+              name="test"
+              imageSrc="http://lorempixel.com/1640/480"
+              description="bruhdafja;fjajfafafadfafd"
+              ingredients = {["test"," test2"]}
+            />
+            {/* <RecipeCard
               name="test"
               imageSrc="http://lorempixel.com/1640/480"
               description="bruhdafja;fjajfafafadfafd"
@@ -51,12 +54,7 @@ export class Recipes extends Component<Props, State> {
               name="test"
               imageSrc="http://lorempixel.com/1640/480"
               description="bruhdafja;fjajfafafadfafd"
-            />
-            <RecipeCard
-              name="test"
-              imageSrc="http://lorempixel.com/1640/480"
-              description="bruhdafja;fjajfafafadfafd"
-            />
+            /> */}
           </div>
         </Container>
       </div>
