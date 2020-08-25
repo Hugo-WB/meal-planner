@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
+import { connect,useSelector } from "react-redux";
+import {useFirestoreConnect} from "react-redux-firebase"
 
 import TopNav from "../../Components/TopNav/TopNav";
 import RecipeCard from "../../Components/RecipeCard/RecipeCard";
@@ -10,10 +11,22 @@ import "./Recipes.css"
 interface Props {}
 interface State {}
 
-export class Recipes extends Component<Props, State> {
-  state = {};
-
-  render() {
+const Recipes: React.FC<Props> = () =>{
+    useFirestoreConnect([{collection:"recipes"}])
+    const recipes = useSelector((state:any) => state.firestore.ordered.recipes)
+    console.log(recipes)
+    const recipeCards = () =>{
+      recipes.map((recipe:any) =>  
+      //  MAKE THE RECIPE TYPED INTERFACE
+        <RecipeCard
+          name={recipe.name}
+          imageSrc={recipe.imageSrc}
+          description={recipe.description}
+          ingredients = {recipe.Ingredients}
+        />
+      )
+    }
+    console.log(recipeCards)
     return (
       <div>
         <TopNav />
@@ -25,45 +38,16 @@ export class Recipes extends Component<Props, State> {
               description="bruhdafja;fjajfafafadfafd"
               ingredients = {["test"," test2"]}
             />
-            {/* <RecipeCard
-              name="test"
-              imageSrc="http://lorempixel.com/1640/480"
-              description="bruhdafja;fjajfafafadfafd"
-            />
-            <RecipeCard
-              name="test"
-              imageSrc="http://lorempixel.com/1640/480"
-              description="bruhdafja;fjajfafafadfafd"
-            />
-            <RecipeCard
-              name="test"
-              imageSrc="http://lorempixel.com/1640/480"
-              description="bruhdafja;fjajfafafadfafd"
-            />
-            <RecipeCard
-              name="test"
-              imageSrc="http://lorempixel.com/1640/480"
-              description="bruhdafja;fjajfafafadfafd"
-            />
-            <RecipeCard
-              name="test"
-              imageSrc="http://lorempixel.com/1640/480"
-              description="bruhdafja;fjajfafafadfafd"
-            />
-            <RecipeCard
-              name="test"
-              imageSrc="http://lorempixel.com/1640/480"
-              description="bruhdafja;fjajfafafadfafd"
-            /> */}
+            {recipeCards}
           </div>
         </Container>
       </div>
     );
-  }
-}
 
+}
 const mapStateToProps = (state: any) => ({});
 
 const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Recipes);
+

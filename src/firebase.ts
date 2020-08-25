@@ -1,4 +1,5 @@
-import * as firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/firestore"
 const config = {
   apiKey: "AIzaSyDWK00mcybySnW_JgfsBCqZbeTPkUP4DEY",
   authDomain: "meal-planner-92a60.firebaseapp.com",
@@ -10,4 +11,5 @@ const config = {
   measurementId: "G-CK0YC286NN",
 };
 firebase.initializeApp(config);
+firebase.firestore();
 export default firebase;
