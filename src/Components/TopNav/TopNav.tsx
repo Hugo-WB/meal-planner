@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { Menu, Button } from 'semantic-ui-react'
+import { Menu, Button, Input } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 export default class Topnav extends Component {
   render() {
     return (
       <div>
-        <Menu color = "teal" pointing>
+        <Menu color = "teal" pointing secondary>
           <Menu.Item>
             <img />
           </Menu.Item>
@@ -19,9 +19,17 @@ export default class Topnav extends Component {
           <Link to="/recipes">
             <Menu.Item link>Recipes</Menu.Item>
           </Link>
-          <Menu.Item position="right">
-            <Button inverted>Sign Out</Button>
-          </Menu.Item>
+          <Menu.Menu position="right">
+            <Menu.Item>
+              <Input icon='search' placeholder='Search...' />
+            </Menu.Item>
+            <Menu.Item>
+              <Button>Add Recipe</Button>
+            </Menu.Item>
+            <Menu.Item position="right">
+              <Button>Sign Out</Button>
+            </Menu.Item>
+          </Menu.Menu>
         </Menu>
         
       </div>
