@@ -35,24 +35,18 @@ export default class RecipeCard extends Component<Props, State> {
             <Card.Description>{this.props.description}</Card.Description>
           </Card.Content>
         </Card>
-        <Modal open={this.state.showModal} closeIcon onClose = {this.switchModal}>
-          <Modal.Header>
-            {this.props.name}
-          </Modal.Header>
+        <Modal open={this.state.showModal} closeIcon onClose={this.switchModal}>
+          <Modal.Header>{this.props.name}</Modal.Header>
           <Modal.Content image>
-            <Image size = "medium" src = {this.props.imageSrc} />
+            <Image size="medium" src={this.props.imageSrc} />
             <Modal.Description>
-              <Header>
-                Ingredients:
-              </Header>
+              <Header>Ingredients:</Header>
               <List bulleted>
-                {this.props.ingredients.map((ingredient) => 
+                {this.props.ingredients.map((ingredient) => (
                   <List.Item>{ingredient}</List.Item>
-                )}
+                ))}
               </List>
-              <Header>
-                Steps:
-              </Header>
+              <Header>Steps:</Header>
               <p>{this.props.steps}</p>
             </Modal.Description>
           </Modal.Content>
