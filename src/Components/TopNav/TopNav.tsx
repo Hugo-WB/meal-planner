@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useFirestore } from "react-redux-firebase";
 import { Menu, Button, Input, Modal, Icon, Form } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { Recipe } from "./../../reducers/interfaces";
 interface Props {}
@@ -39,7 +39,7 @@ const AddRecipeModal = () => {
       onOpen={() => setOpen(true)}
       // open = {true}
       open={open}
-      trigger={<Button>Add Recipe</Button>}
+      trigger={<Button color="olive">Add Recipe</Button>}
     >
       <Modal.Header align="center">Add New Recipe</Modal.Header>
       <Modal.Content>
@@ -98,6 +98,14 @@ const AddRecipeModal = () => {
 
 const TopNav = (props: Props) => {
   const firestore = useFirestore();
+  const location = useLocation();
+  const links:string[] = ["dashboard","plan","recipes"]
+  const Links = links.map((link) => (
+    <Link to = {"/"+link}>
+      <Menu.Item link active={location.pathname == ("/"+link)}>{link.charAt(0).toUpperCase() + link.slice(1)}</Menu.Item>
+    </Link>
+  ))
+
 
   return (
     <div>
@@ -105,17 +113,7 @@ const TopNav = (props: Props) => {
         <Menu.Item>
           <img />
         </Menu.Item>
-        <Link to="/dashboard">
-          <Menu.Item link active={true}>
-            Dashboard
-          </Menu.Item>
-        </Link>
-        <Link to="/plan">
-          <Menu.Item link>Plan</Menu.Item>
-        </Link>
-        <Link to="/recipes">
-          <Menu.Item link>Recipes</Menu.Item>
-        </Link>
+        {Links}
         <Menu.Menu position="right">
           <Menu.Item>
             <Input icon="search" placeholder="Search..." />
@@ -124,7 +122,7 @@ const TopNav = (props: Props) => {
             <AddRecipeModal />
           </Menu.Item>
           <Menu.Item position="right">
-            <Button>Sign Out</Button>
+            <Button color="red">Sign Out</Button>
           </Menu.Item>
         </Menu.Menu>
       </Menu>
