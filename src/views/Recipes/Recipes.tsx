@@ -32,8 +32,8 @@ const Recipes: React.FC<Props> = () => {
   return (
     <div>
       <TopNav />
-      <Container>
-        <div className="recipeGrid">
+      <Container text style={{marginTop:'3em'}}>
+        <Grid stackable centered veritcalAlign="middle">
           <RecipeCard
             name="test"
             imageSrc="http://lorempixel.com/1640/480"
@@ -41,6 +41,9 @@ const Recipes: React.FC<Props> = () => {
             ingredients={["test", " test2"]}
           />
           <RecipeCards />
+
+        </Grid>
+        <div className="recipeGrid">
         </div>
       </Container>
     </div>
