@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useFirestore } from "react-redux-firebase";
 import { Menu, Button, Input, Modal, Icon, Form } from "semantic-ui-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 
 import { Recipe } from "./../../reducers/interfaces";
 interface Props {}
 const AddRecipeModal = () => {
   const firestore = useFirestore();
+  const history = useHistory();
   const [open, setOpen] = useState(false); //For the Modal for creating a new recipe
   const [recipe, setRecipe] = useState<Recipe>({
     name: "",
@@ -28,8 +29,24 @@ const AddRecipeModal = () => {
     console.log(recipe);
   };
   const submit = () => {
-    firestore.collection("recipes").add(recipe);
-    setOpen(false);
+
+    const imageExists = (url:string)=>{
+      var http = new XMLHttpRequest();
+      http.open('HEAD', url, false);
+      http.send();
+      return http.status != 404;
+    }
+
+    let isValid = false 
+    if ((recipe.name.length > 0) && (recipe.description.length > 0) && (imageExists(recipe.imageSrc)) && (recipe.steps.length > 0) && (recipe.ingredients.length > 0)){
+      isValid = true
+      firestore.collection("recipes").add(recipe);
+      setOpen(false);
+      history.push("/recipes")
+    }else{
+      alert("Invalid Data please try again")
+    }
+
   };
 
   return (
@@ -37,12 +54,11 @@ const AddRecipeModal = () => {
       closeIcon
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
-      // open = {true}
       open={open}
-      trigger={<Button color="olive">Add Recipe</Button>}
+      trigger={<Button color="olive" align="center">Add Recipe</Button>}
     >
       <Modal.Header align="center">Add New Recipe</Modal.Header>
-      <Modal.Content>
+      <Modal.Content scrolling>
         <Form>
           <Form.Group widths="equal">
             <Form.Input
@@ -109,20 +125,20 @@ const TopNav = (props: Props) => {
 
   return (
     <div>
-      <Menu color="teal" pointing secondary>
+      <Menu color="teal" pointing secondary stackable>
         <Menu.Item>
           <img />
         </Menu.Item>
         {Links}
         <Menu.Menu position="right">
           <Menu.Item>
-            <Input icon="search" placeholder="Search..." />
+            <Input icon="search" placeholder="Search..." color="teal"/>
           </Menu.Item>
           <Menu.Item>
             <AddRecipeModal />
           </Menu.Item>
           <Menu.Item position="right">
-            <Button color="red">Sign Out</Button>
+              <Button color="red" align="center">Sign Out</Button>
           </Menu.Item>
         </Menu.Menu>
       </Menu>

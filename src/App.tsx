@@ -2,18 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-
 import Homepage from "./views/Homepage/Homepage";
 import Dashboard from "./views/Dashboard/Dashboard";
 import Recipes from "./views/Recipes/Recipes";
+import Plan from "./views/Plan/Plan";
 import "./App.css";
 
 export class App extends Component {
   routes = [
-    {
-      path: "/",
-      component: Homepage,
-    },
     {
       path: "/dashboard",
       component: Dashboard,
@@ -21,6 +17,10 @@ export class App extends Component {
     {
       path: "/recipes",
       component: Recipes,
+    },
+    {
+      path: "/plan",
+      component: Plan,
     },
   ];
 
