@@ -14,8 +14,6 @@ interface State {}
 const RecipeCards: React.FC = () => {
   useFirestoreConnect([{ collection: "recipes" }]);
   const recipes = useSelector((state: any) => state.firestore.ordered.recipes);
-  console.log(recipes);
-  console.log(typeof recipes);
   if (recipes == undefined) {
     return <div></div>;
   } else {

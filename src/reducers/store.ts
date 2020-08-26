@@ -3,14 +3,15 @@ import { firebaseReducer, FirebaseReducer } from "react-redux-firebase";
 import { firestoreReducer } from "redux-firestore";
 import localData from "./localData";
 
-// interface Recipe {
+// export interface Recipe {
 //   name:string,
-//   id:string,
+//   id?:string,
 //   description:string,
 //   imageSrc:string,
-//   owner:any, // <-- Fix this to whatever
+//   owner?:any, // <-- Fix this to whatever
 //   ingredients:string[],
-//   takeAway:boolean,
+//   takeAway?:boolean,
+//   steps:string,
 // }
 
 // interface user{
