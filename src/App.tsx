@@ -6,6 +6,7 @@ import Homepage from "./views/Homepage/Homepage";
 import Dashboard from "./views/Dashboard/Dashboard";
 import Recipes from "./views/Recipes/Recipes";
 import Plan from "./views/Plan/Plan";
+import Authenticate from "./views/Authenticate/Authenticate"
 import "./App.css";
 
 export class App extends Component {
@@ -22,6 +23,10 @@ export class App extends Component {
       path: "/plan",
       component: Plan,
     },
+    {
+      path:"/authenticate",
+      component:Authenticate,
+    }
   ];
 
   render() {

@@ -32,7 +32,7 @@ const Recipes: React.FC<Props> = () => {
   return (
     <div>
       <TopNav />
-      <Container text style={{marginTop:'3em'}}>
+      <Container style={{marginTop:'3em'}}>
         <Grid stackable centered veritcalAlign="middle">
           <RecipeCard
             name="test"
