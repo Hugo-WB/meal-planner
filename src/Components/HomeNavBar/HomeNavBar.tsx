@@ -28,7 +28,7 @@ export default class Navbar extends Component {
           <Menu.Item as = "a" active>Home</Menu.Item>
           <Menu.Item as = "a"><Link to="/dashboard">Test</Link></Menu.Item>
           <Menu.Item position = "right">
-            <Button>Sign In</Button>
+            <Button><Link to="/authenticate">Sign In</Link></Button>
           </Menu.Item>
         </Menu>
       </Visibility>
