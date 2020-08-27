@@ -46,10 +46,6 @@ const Authenticate = () => {
       .auth()
       .signInWithPopup(provider)
       .then((result) => {
-        // if (result.credential.accessToken){
-        //   let token = result.credential.accessToken
-        //   let user = result.user
-        // }
       })
       .catch((error) => {
         let errorCode = error.code;
@@ -64,8 +60,11 @@ const Authenticate = () => {
     firebase
       .auth()
       .signInAnonymously()
-      .then(() => {
-        history.push("/dashboard");
+      .then((result) => {
+        if (result.user != null){
+          console.log(result.user.uid)
+          history.push("/dashboard");
+        }
       })
       .catch((error) => {
         let errorCode = error.code;
