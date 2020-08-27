@@ -36,12 +36,20 @@ const App = () =>{
       component:Authenticate,
     }
   ];
+  let db = firebase.firestore()
+
 
   firebase.auth().onAuthStateChanged((user)=>{
-    if(user){
-      
+    // if(user){
+    //   let username = "Anonymous Koala"
+    //   if (user.email != null){
 
-    }
+    //   }
+    //   db.collection("users").doc(user.uid).set({
+    //     name:
+    //   })
+
+
   })
   
   return (
