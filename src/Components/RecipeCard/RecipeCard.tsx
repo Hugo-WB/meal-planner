@@ -26,15 +26,13 @@ export default class RecipeCard extends Component<Props, State> {
 
   render() {
     return (
-      <div>
-        <Card onClick={this.switchModal}>
-          <Image src={this.props.imageSrc} />
-          <Card.Content>
-            <Card.Header>{this.props.name}</Card.Header>
-            <Card.Meta>{this.props.category}</Card.Meta>
-            <Card.Description>{this.props.description}</Card.Description>
-          </Card.Content>
-        </Card>
+      <Card onClick={this.switchModal} style={{margin:"20px"}}>
+        <Image src={this.props.imageSrc} />
+        <Card.Content>
+          <Card.Header>{this.props.name}</Card.Header>
+          <Card.Meta>{this.props.category}</Card.Meta>
+          <Card.Description>{this.props.description}</Card.Description>
+        </Card.Content>
         <Modal open={this.state.showModal} closeIcon onClose={this.switchModal}>
           <Modal.Header>{this.props.name}</Modal.Header>
           <Modal.Content image>
@@ -51,7 +49,7 @@ export default class RecipeCard extends Component<Props, State> {
             </Modal.Description>
           </Modal.Content>
         </Modal>
-      </div>
+      </Card>
     );
   }
 }

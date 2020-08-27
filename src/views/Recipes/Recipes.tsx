@@ -4,7 +4,7 @@ import { useFirestoreConnect } from "react-redux-firebase";
 
 import TopNav from "../../Components/TopNav/TopNav";
 import RecipeCard from "../../Components/RecipeCard/RecipeCard";
-import { Container, Grid, Rail, Modal, Button } from "semantic-ui-react";
+import { Container, Grid, Rail, Modal, Button, Card } from "semantic-ui-react";
 
 import "./Recipes.css";
 
@@ -33,16 +33,12 @@ const Recipes: React.FC<Props> = () => {
     <div>
       <TopNav />
       <Container style={{marginTop:'3em'}}>
-        <Grid stackable centered veritcalAlign="middle">
-          <RecipeCard
-            name="test"
-            imageSrc="http://lorempixel.com/1640/480"
-            description="bruhdafja;fjajfafafadfafd"
-            ingredients={["test", " test2"]}
-          />
+        {/* <Grid stackable centered veritcalAlign="middle">
+        </Grid> */}
+        <Card.Group>
           <RecipeCards />
 
-        </Grid>
+        </Card.Group>
         <div className="recipeGrid">
         </div>
       </Container>

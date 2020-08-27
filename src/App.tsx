@@ -9,8 +9,16 @@ import Plan from "./views/Plan/Plan";
 import Authenticate from "./views/Authenticate/Authenticate"
 import "./App.css";
 
-export class App extends Component {
-  routes = [
+import * as firebase from "firebase/app"
+import "firebase/auth"
+
+interface route {
+  path:string,
+  component: any
+}
+
+const App = () =>{
+  const routes:route[] = [
     {
       path: "/dashboard",
       component: Dashboard,
@@ -29,28 +37,29 @@ export class App extends Component {
     }
   ];
 
-  render() {
-    return (
-      <div>
-        <Router>
-          <Switch>
-            {this.routes.map((route) => (
-              <Route
-                path={route.path}
-                component={route.component}
-                exact={true}
-              />
-            ))}
-            <Route path="*" component={Homepage}></Route>
-          </Switch>
-        </Router>
-      </div>
-    );
-  }
+  firebase.auth().onAuthStateChanged((user)=>{
+    if(user){
+      
+
+    }
+  })
+  
+  return (
+    <div>
+      <Router>
+        <Switch>
+          {routes.map((route) => (
+            <Route
+              path={route.path}
+              component={route.component}
+              exact={true}
+            />
+          ))}
+          <Route path="*" component={Homepage}></Route>
+        </Switch>
+      </Router>
+    </div>
+  );
 }
 
-const mapStateToProps = (state: any) => ({});
-
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App

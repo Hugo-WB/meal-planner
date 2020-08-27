@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { useFirestore } from "react-redux-firebase";
 import { Menu, Button, Input, Modal, Icon, Form } from "semantic-ui-react";
 import { Link, useLocation, useHistory } from "react-router-dom";
+import * as firebase from "firebase/app"
+import "firebase/auth"
 
 import { Recipe } from "./../../reducers/interfaces";
+import { useSelector } from "react-redux";
 interface Props {}
 const AddRecipeModal = () => {
   const firestore = useFirestore();
@@ -113,14 +116,23 @@ const AddRecipeModal = () => {
 };
 
 const TopNav = (props: Props) => {
-  const firestore = useFirestore();
   const location = useLocation();
   const links:string[] = ["dashboard","plan","recipes"]
+  const history = useHistory()
   const Links = links.map((link) => (
     <Link to = {"/"+link}>
       <Menu.Item link active={location.pathname == ("/"+link)}>{link.charAt(0).toUpperCase() + link.slice(1)}</Menu.Item>
     </Link>
   ))
+
+  const signOut = () =>{
+    firebase.auth().signOut().then(()=>{
+      history.push("/")
+    }).catch((error:any)=>{
+      alert(error.message)
+    });
+
+  }
 
 
   return (
@@ -138,7 +150,7 @@ const TopNav = (props: Props) => {
             <AddRecipeModal />
           </Menu.Item>
           <Menu.Item position="right">
-              <Button color="red" align="center">Sign Out</Button>
+              <Button color="red" align="center" onClick = {signOut}>Sign Out</Button>
           </Menu.Item>
         </Menu.Menu>
       </Menu>
