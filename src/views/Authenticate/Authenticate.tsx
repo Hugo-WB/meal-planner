@@ -23,7 +23,11 @@ const Authenticate = () => {
     email: "",
     password: "",
   });
-  const [signUp, setSignUp] = useState(false);
+  const [error,setError] = useState({
+    email:false,
+    password:false,
+    message:"",
+  })
 
   const login = () => {
     firebase
@@ -45,8 +49,7 @@ const Authenticate = () => {
     firebase
       .auth()
       .signInWithPopup(provider)
-      .then((result) => {
-      })
+      .then((result) => {})
       .catch((error) => {
         let errorCode = error.code;
         let errorMessage = error.message;
@@ -61,8 +64,8 @@ const Authenticate = () => {
       .auth()
       .signInAnonymously()
       .then((result) => {
-        if (result.user != null){
-          console.log(result.user.uid)
+        if (result.user != null) {
+          console.log(result.user);
           history.push("/dashboard");
         }
       })
@@ -71,6 +74,16 @@ const Authenticate = () => {
         let errorMessage = error.message;
       });
   };
+
+  const signUp = () =>{
+    firebase.auth().createUserWithEmailAndPassword(userInfo.email,userInfo.password).then((result)=>{
+      history.push("/dashboard")
+    }).catch((error)=>{
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      setError({email:true,password:true,message:errorMessage})
+    })
+  }
 
   return (
     <div>
@@ -101,6 +114,7 @@ const Authenticate = () => {
                 onChange={(e) => {
                   setUserInfo({ ...userInfo, email: e.target.value });
                 }}
+                error={error.email}
               />
               <Form.Input
                 fluid
@@ -112,6 +126,7 @@ const Authenticate = () => {
                 onChange={(e) => {
                   setUserInfo({ ...userInfo, password: e.target.value });
                 }}
+                error={error.password}
               />
               <Button
                 fluid
@@ -144,10 +159,13 @@ const Authenticate = () => {
               </Button>
             </Segment>
           </Form>
+          {(error.message=="")?<div></div>:<Message error header="SignUp/Login Error" content={error.message} />}
 
-          <Message textAlign="center">
-            New? <Link to="/signup">Sign Up</Link>
-          </Message>
+          <Button fluid style={{ marginTop: "15px" }} basic onClick = {signUp}>
+            <h5>
+              Sign Up
+            </h5>
+          </Button>
         </Grid.Column>
       </Grid>
     </div>
