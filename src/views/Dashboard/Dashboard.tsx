@@ -1,12 +1,9 @@
 import React, { Component, createRef } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  Container,
-  Image,
-} from "semantic-ui-react";
+import { Container, Image } from "semantic-ui-react";
 
-import TopNav from "../../Components/TopNav/TopNav"
+import TopNav from "../../Components/TopNav/TopNav";
 import "./Dashboard.css";
 
 export class Dashboard extends Component {

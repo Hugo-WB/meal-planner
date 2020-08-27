@@ -26,16 +26,16 @@ import localData from "./localData";
 //   users: user,
 // }
 
-interface RootState {
-  firebase: FirebaseReducer.Reducer,
-  firestore:any,
-  localData:any,
-}
+// interface RootState {
+//   firebase: FirebaseReducer.Reducer,
+//   firestore:any,
+//   localData:any,
+// }
 
-const rootReducer = combineReducers<RootState>({
+const rootReducer = combineReducers({
   firebase: firebaseReducer,
   firestore: firestoreReducer,
   localData: localData,
 });
-// export type RootState = ReturnType<typeof rootReducer>
+export type RootState = ReturnType<typeof rootReducer>;
 export default rootReducer;
