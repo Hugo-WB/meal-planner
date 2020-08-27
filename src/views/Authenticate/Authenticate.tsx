@@ -19,21 +19,28 @@ import { useHistory, Link } from "react-router-dom";
 
 const Authenticate = () => {
   const history = useHistory();
+  let db = firebase.firestore();
   const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",
   });
-  const [error,setError] = useState({
-    email:false,
-    password:false,
-    message:"",
-  })
+  const [error, setError] = useState({
+    email: false,
+    password: false,
+    message: "",
+  });
 
   const login = () => {
     firebase
       .auth()
       .signInWithEmailAndPassword(userInfo.email, userInfo.password)
-      .then(() => {
+      .then((result) => {
+        if (result.user != null) {
+          db.collection("users").doc(result.user.uid).set({
+            username: "Koala",
+            email: result.user.email,
+          });
+        }
         history.push("/dashboard");
       })
       .catch((error) => {
@@ -49,7 +56,14 @@ const Authenticate = () => {
     firebase
       .auth()
       .signInWithPopup(provider)
-      .then((result) => {})
+      .then((result) => {
+        if (result.user != null) {
+          db.collection("users").doc(result.user.uid).set({
+            username: "Koala",
+            email: result.user.email,
+          });
+        }
+      })
       .catch((error) => {
         let errorCode = error.code;
         let errorMessage = error.message;
@@ -66,6 +80,11 @@ const Authenticate = () => {
       .then((result) => {
         if (result.user != null) {
           console.log(result.user);
+          db.collection("users").doc(result.user.uid).set({
+            username: "Anonymous Koala",
+            email: "",
+          });
+
           history.push("/dashboard");
         }
       })
@@ -75,15 +94,25 @@ const Authenticate = () => {
       });
   };
 
-  const signUp = () =>{
-    firebase.auth().createUserWithEmailAndPassword(userInfo.email,userInfo.password).then((result)=>{
-      history.push("/dashboard")
-    }).catch((error)=>{
-      let errorCode = error.code;
-      let errorMessage = error.message;
-      setError({email:true,password:true,message:errorMessage})
-    })
-  }
+  const signUp = () => {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(userInfo.email, userInfo.password)
+      .then((result) => {
+        if (result.user != null) {
+          db.collection("users").doc(result.user.uid).set({
+            username: "Koala",
+            email: result.user.email,
+          });
+        }
+        history.push("/dashboard");
+      })
+      .catch((error) => {
+        let errorCode = error.code;
+        let errorMessage = error.message;
+        setError({ email: true, password: true, message: errorMessage });
+      });
+  };
 
   return (
     <div>
@@ -145,7 +174,7 @@ const Authenticate = () => {
                 style={{ marginBottom: "5px" }}
               >
                 <Icon name="google" />
-                Login with Google
+                Login/SignUp with Google
               </Button>
               <Button
                 fluid
@@ -159,12 +188,18 @@ const Authenticate = () => {
               </Button>
             </Segment>
           </Form>
-          {(error.message=="")?<div></div>:<Message error header="SignUp/Login Error" content={error.message} />}
+          {error.message == "" ? (
+            <div></div>
+          ) : (
+            <Message
+              error
+              header="SignUp/Login Error"
+              content={error.message}
+            />
+          )}
 
-          <Button fluid style={{ marginTop: "15px" }} basic onClick = {signUp}>
-            <h5>
-              Sign Up
-            </h5>
+          <Button fluid style={{ marginTop: "15px" }} basic onClick={signUp}>
+            <h5>Sign Up</h5>
           </Button>
         </Grid.Column>
       </Grid>

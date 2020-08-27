@@ -29,13 +29,11 @@ export default function Homepage() {
           />
         </Container>
       </Segment>
-      <Segment id = "informationSegment">
+      <Segment id="informationSegment">
         <Grid centerd container stackable>
           <Grid.Row columns="equal" textAlign="center">
             <Grid.Column width={10}>
-              <Header size = "huge">
-                Save Recipes
-              </Header>
+              <Header size="huge">Save Recipes</Header>
               <p>
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non
                 reprehenderit possimus sunt dolorem, tenetur, quasi commodi

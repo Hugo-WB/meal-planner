@@ -1,24 +1,23 @@
 interface User {
-  uid:string,
-  name:string,
+  uid: string;
+  username: string;
 }
 interface LocalData {
-  currentPage:string,
-  user?: User,
+  currentPage: string;
+  user?: User;
 }
-const initialState:LocalData = {
-  currentPage:"Dashboard",
-}
+const initialState: LocalData = {
+  currentPage: "Dashboard",
+};
 
-export default (state = initialState,action:any):LocalData =>{
-  switch(action.type){
+export default (state = initialState, action: any): LocalData => {
+  switch (action.type) {
     case "updateUser":
       return {
         ...state,
-        user:action.user
-
-      }
+        user: action.user,
+      };
     default:
-      return state
+      return state;
   }
-}
+};
