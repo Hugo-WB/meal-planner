@@ -1,6 +1,7 @@
 import React,{Component} from "react";
 import { Button, Visibility, Menu,Container } from "semantic-ui-react";
 import { timeStamp } from "console";
+import {Link} from "react-router-dom"
 
 export default class Navbar extends Component {
   state = {
@@ -25,7 +26,7 @@ export default class Navbar extends Component {
           secondary
         >
           <Menu.Item as = "a" active>Home</Menu.Item>
-          <Menu.Item as = "a">Test</Menu.Item>
+          <Menu.Item as = "a"><Link to="/dashboard">Test</Link></Menu.Item>
           <Menu.Item position = "right">
             <Button>Sign In</Button>
           </Menu.Item>
