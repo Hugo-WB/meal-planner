@@ -36,3 +36,10 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById("root")
 );
+
+
+
+// TODO: Make the Plan, use fullcalendar.io   
+// TODO: prices
+//TODO: Get name from authentification
+//TODO:
