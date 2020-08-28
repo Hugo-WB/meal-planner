@@ -11,6 +11,7 @@ import "./App.css";
 
 import * as firebase from "firebase/app";
 import "firebase/auth";
+import { RootState } from "./reducers/store";
 
 interface route {
   path: string;
@@ -18,7 +19,7 @@ interface route {
 }
 
 const App = () => {
-  const routes: route[] = [
+  const secureRoutes: route[] = [
     {
       path: "/dashboard",
       component: Dashboard,
@@ -31,31 +32,54 @@ const App = () => {
       path: "/plan",
       component: Plan,
     },
+  ];
+  const unsecureRoutes:route[]=[
     {
       path: "/authenticate",
       component: Authenticate,
     },
-  ];
+    {
+      path:"*",
+      component:Homepage,
+    }
+    
+  ]
   let db = firebase.firestore();
   const dispatch = useDispatch();
+
+  const loggedIn = useSelector((state:RootState)=>state.localData.loggedIn)
 
   firebase.auth().onAuthStateChanged((user) => {
     if (user != null) {
       dispatch({
-        type: "updateUser",
+        type: "loginUser",
         user: { uid: user.uid, username: "test" },
       });
+    }else{
+      dispatch({
+        type:"logoutUser",
+      })
     }
   });
+
+  const secureRoutesJSX = (
+    secureRoutes.map((route) => (
+      <Route path={route.path} component={route.component} exact={true} />
+    ))
+  )
+  const unsecureRoutesJSX = (
+    unsecureRoutes.map((route) => (
+      <Route path={route.path} component={route.component} exact={true} />
+    ))
+
+  )
 
   return (
     <div>
       <Router>
         <Switch>
-          {routes.map((route) => (
-            <Route path={route.path} component={route.component} exact={true} />
-          ))}
-          <Route path="*" component={Homepage}></Route>
+          {loggedIn ? secureRoutesJSX:""}
+          {unsecureRoutesJSX}
         </Switch>
       </Router>
     </div>
