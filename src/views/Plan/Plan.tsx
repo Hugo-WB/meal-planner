@@ -78,7 +78,7 @@ const Plan = () => {
   return (
     <div>
       <TopNav />
-      {/* {events.length < 1 ? form : calendar} */}
+      {events.length < 1 ? form : calendar}
     </div>
   );
 };
