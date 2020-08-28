@@ -62,6 +62,7 @@ const Authenticate = () => {
             username: "Koala",
             email: result.user.email,
           });
+          history.push("/dashboard")
         }
       })
       .catch((error) => {
