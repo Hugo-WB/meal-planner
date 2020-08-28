@@ -23,6 +23,8 @@ const RecipeCards: React.FC = () => {
         imageSrc={recipe.imageSrc}
         description={recipe.description}
         ingredients={recipe.ingredients}
+        author={recipe.author}
+        steps={recipe.steps}
       />
     ));
   }

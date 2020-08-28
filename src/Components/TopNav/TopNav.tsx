@@ -64,7 +64,7 @@ const AddRecipeModal = () => {
       onOpen={() => setOpen(true)}
       open={open}
       trigger={
-        <Button color="olive" align="center">
+        <Button fluid color="olive" align="center">
           Add Recipe
         </Button>
       }
@@ -167,7 +167,7 @@ const TopNav = (props: Props) => {
             {user==null ? <div /> : user.uid}
           </Menu.Item> */}
           <Menu.Item position="right">
-            <Button color="red" align="center" onClick={signOut}>
+            <Button fluid color="red" align="center" onClick={signOut}>
               Sign Out
             </Button>
           </Menu.Item>

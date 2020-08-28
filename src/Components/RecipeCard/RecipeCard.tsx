@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Image, Modal, Header, List } from "semantic-ui-react";
+import { Card, Image, Modal, Header, List, Grid } from "semantic-ui-react";
 
 interface Props {
   name: string;
@@ -7,7 +7,8 @@ interface Props {
   category?: string;
   description: string;
   ingredients: string[];
-  steps?: string;
+  steps: string;
+  author:string;
 }
 
 interface State {
@@ -34,7 +35,18 @@ export default class RecipeCard extends Component<Props, State> {
           <Card.Description>{this.props.description}</Card.Description>
         </Card.Content>
         <Modal open={this.state.showModal} closeIcon onClose={this.switchModal}>
-          <Modal.Header>{this.props.name}</Modal.Header>
+          <Modal.Header>
+            <Grid columns="equal" textAlign="center" container>
+              <Grid.Column>
+                {this.props.name}
+              </Grid.Column>
+              <Grid.Column textAlign ="right">
+                <a href="#">
+                {this.props.author}
+                </a>
+              </Grid.Column>
+            </Grid>
+            </Modal.Header>
           <Modal.Content image>
             <Image size="medium" src={this.props.imageSrc} />
             <Modal.Description>
