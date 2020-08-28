@@ -9,7 +9,7 @@ interface LocalData {
 }
 const initialState: LocalData = {
   currentPage: "Dashboard",
-  loggedIn:false,
+  loggedIn:true,
   user:{
     uid:"",
     username:"",

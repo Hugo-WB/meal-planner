@@ -36,10 +36,10 @@ const Authenticate = () => {
       .signInWithEmailAndPassword(userInfo.email, userInfo.password)
       .then((result) => {
         if (result.user != null) {
-          db.collection("users").doc(result.user.uid).set({
-            username: "Koala",
-            email: result.user.email,
-          });
+          // db.collection("users").doc(result.user.uid).set({
+          //   username: "Koala",
+          //   email: result.user.email,
+          // });
         }
         history.push("/dashboard");
       })
@@ -58,33 +58,34 @@ const Authenticate = () => {
       .signInWithPopup(provider)
       .then((result) => {
         if (result.user != null) {
-          db.collection("users").doc(result.user.uid).set({
-            username: "Koala",
-            email: result.user.email,
-          });
+          addUserToFirestore({
+            uid:result.user.uid,
+            username:"Gmail Koala",
+            email:result.user.email,
+          })
           history.push("/dashboard")
         }
       })
       .catch((error) => {
-        let errorCode = error.code;
-        let errorMessage = error.message;
-        let email = error.email;
-        let credential = error.credential;
+        // let errorCode = error.code;
+        // let errorMessage = error.message;
+        // let email = error.email;
+        // let credential = error.credential;
       });
   };
 
   const guestLogIn = () => {
-    console.log("guest login");
     firebase
       .auth()
       .signInAnonymously()
       .then((result) => {
         if (result.user != null) {
           console.log(result.user);
-          db.collection("users").doc(result.user.uid).set({
-            username: "Anonymous Koala",
-            email: "",
-          });
+          addUserToFirestore({
+            uid:result.user.uid,
+            username:"Anonymous Koala",
+            email:result.user.email,
+          })
 
           history.push("/dashboard");
         }
@@ -101,10 +102,11 @@ const Authenticate = () => {
       .createUserWithEmailAndPassword(userInfo.email, userInfo.password)
       .then((result) => {
         if (result.user != null) {
-          db.collection("users").doc(result.user.uid).set({
-            username: "Koala",
-            email: result.user.email,
-          });
+          addUserToFirestore({
+            uid:result.user.uid,
+            username:"Koala",
+            email:result.user.email,
+          })
         }
         history.push("/dashboard");
       })
@@ -114,6 +116,11 @@ const Authenticate = () => {
         setError({ email: true, password: true, message: errorMessage });
       });
   };
+
+  const addUserToFirestore = (user:any) =>{
+    db.collection("users").doc(user.uid).set(user)
+    
+  }
 
   return (
     <div>
