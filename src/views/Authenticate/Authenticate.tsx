@@ -29,6 +29,9 @@ const Authenticate = () => {
     password: false,
     message: "",
   });
+  const addUserToFirestore = (user:any) =>{
+    db.collection("users").doc(user.uid).set(user)
+  }
 
   const login = () => {
     firebase
@@ -51,7 +54,6 @@ const Authenticate = () => {
   };
 
   const googleLogIn = () => {
-    console.log("work in progress");
     let provider = new firebase.auth.GoogleAuthProvider();
     firebase
       .auth()
@@ -67,10 +69,11 @@ const Authenticate = () => {
         }
       })
       .catch((error) => {
-        // let errorCode = error.code;
-        // let errorMessage = error.message;
-        // let email = error.email;
-        // let credential = error.credential;
+        let errorCode = error.code;
+        let errorMessage = error.message;
+        console.log(errorCode,errorMessage)
+        let email = error.email;
+        let credential = error.credential;
       });
   };
 
@@ -117,10 +120,6 @@ const Authenticate = () => {
       });
   };
 
-  const addUserToFirestore = (user:any) =>{
-    db.collection("users").doc(user.uid).set(user)
-    
-  }
 
   return (
     <div>
