@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Card, Image, Modal, Header, List, Grid } from "semantic-ui-react";
+import React, { useState, ReactElement } from "react";
+import { Card, Image, Modal, Header, List, Grid, Icon } from "semantic-ui-react";
 
 interface Props {
   name: string;
@@ -11,57 +11,63 @@ interface Props {
   author:string;
 }
 
-interface State {
-  showModal: boolean;
-}
+export default function RecipeCard(props: Props): ReactElement {
+  const [showRecipe,setShowRecipe] = useState(false);
+  const [showUser,setShowUser] = useState(false);
 
-export default class RecipeCard extends Component<Props, State> {
-  state = {
-    showModal: false,
-  };
-  switchModal = () => {
-    this.setState({
-      showModal: !this.state.showModal,
-    });
-  };
+  const Recipe = (
+    <Modal open={showRecipe} closeIcon onClose={()=>setShowRecipe(false)}>
+      <Modal.Header>
+        <Grid columns="equal" textAlign="center" container>
+          <Grid.Column>
+            {props.name}
+          </Grid.Column>
+          <Grid.Column textAlign ="right">
+            <a href="#" onClick={()=>setShowUser(true)}>
+            {props.author}
+            </a>
+          </Grid.Column>
+        </Grid>
+        </Modal.Header>
+      <Modal.Content image>
+        <Image size="medium" src={props.imageSrc} />
+        <Modal.Description>
+          <Header>Ingredients:</Header>
+          <List bulleted>
+            {props.ingredients.map((ingredient) => (
+              <List.Item>{ingredient}</List.Item>
+            ))}
+          </List>
+          <Header>Steps:</Header>
+          <p>{props.steps}</p>
+        </Modal.Description>
+      </Modal.Content>
+    </Modal>
+  )
 
-  render() {
-    return (
-      <Card onClick={this.switchModal} style={{margin:"20px"}}>
-        <Image src={this.props.imageSrc} />
-        <Card.Content>
-          <Card.Header>{this.props.name}</Card.Header>
-          <Card.Meta>{this.props.category}</Card.Meta>
-          <Card.Description>{this.props.description}</Card.Description>
-        </Card.Content>
-        <Modal open={this.state.showModal} closeIcon onClose={this.switchModal}>
-          <Modal.Header>
-            <Grid columns="equal" textAlign="center" container>
-              <Grid.Column>
-                {this.props.name}
-              </Grid.Column>
-              <Grid.Column textAlign ="right">
-                <a href="#">
-                {this.props.author}
-                </a>
-              </Grid.Column>
-            </Grid>
-            </Modal.Header>
-          <Modal.Content image>
-            <Image size="medium" src={this.props.imageSrc} />
-            <Modal.Description>
-              <Header>Ingredients:</Header>
-              <List bulleted>
-                {this.props.ingredients.map((ingredient) => (
-                  <List.Item>{ingredient}</List.Item>
-                ))}
-              </List>
-              <Header>Steps:</Header>
-              <p>{this.props.steps}</p>
-            </Modal.Description>
-          </Modal.Content>
-        </Modal>
-      </Card>
-    );
-  }
+  const User = (
+    <Modal open = {showUser} onClose={()=>setShowUser(false)} closeIcon>
+      <Modal.Header>
+        {props.author}
+      </Modal.Header>
+    </Modal>
+  )
+
+
+  return (
+    <Card onClick={()=>setShowRecipe(true)} style={{margin:"20px"}}>
+      <Image src={props.imageSrc} />
+      <Card.Content>
+        <Card.Header>{props.name}</Card.Header>
+        <Card.Meta>{props.category}</Card.Meta>
+        <Card.Description>{props.description}</Card.Description>
+      </Card.Content>
+      <Card.Content extra>
+          <Icon name="user" />
+          {props.author}
+      </Card.Content>
+      {Recipe}
+      {User}
+    </Card>
+  );
 }
