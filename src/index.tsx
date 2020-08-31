@@ -42,4 +42,5 @@ ReactDOM.render(
 // TODO: Make the Plan, use fullcalendar.io   
 // TODO: prices
 //TODO: Get name from authentification
-//TODO:
+//TODO: ADD recipes using web scraping python maybe? or JS
+//TODO do something with ML estimate price of recipe using ML
