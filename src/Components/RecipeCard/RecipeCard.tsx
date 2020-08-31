@@ -63,8 +63,8 @@ export default function RecipeCard(props: Props): ReactElement {
         <Card.Description>{props.description}</Card.Description>
       </Card.Content>
       <Card.Content extra>
-          <Icon name="user" />
-          {props.author}
+          <Icon name="user" color="blue"/>
+            {props.author}
       </Card.Content>
       {Recipe}
       {User}
