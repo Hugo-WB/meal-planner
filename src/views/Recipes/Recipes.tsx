@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect, useSelector } from "react-redux";
 import { useFirestoreConnect } from "react-redux-firebase";
 
@@ -12,9 +12,10 @@ interface Props {}
 interface State {}
 
 const RecipeCards: React.FC = () => {
-  useFirestoreConnect([{ collection: "recipes" }]);
+  useFirestoreConnect([{ collection: "recipes"}]);
+  // useFirestoreConnect({ collection: "recipes", orderBy: ["name"] });
   const recipes = useSelector((state: any) => state.firestore.ordered.recipes);
-  if (recipes == undefined) {
+  if (recipes === undefined) {
     return <div></div>;
   } else {
     return recipes.map((recipe: any) => (
@@ -34,14 +35,13 @@ const Recipes: React.FC<Props> = () => {
   return (
     <div>
       <TopNav />
-      <Container style={{ marginTop: "3em" }}>
-        {/* <Grid stackable centered veritcalAlign="middle">
+      {/* <Container style={{ marginTop: "3em" }}> */}
+      {/* <Grid stackable centered veritcalAlign="middle">
         </Grid> */}
-        <Card.Group>
-          <RecipeCards />
-        </Card.Group>
-        <div className="recipeGrid"></div>
-      </Container>
+      <Card.Group centered stackable doubling style={{ marginTop: "10px" }}>
+        <RecipeCards />
+      </Card.Group>
+      {/* </Container> */}
     </div>
   );
 };
