@@ -1,9 +1,18 @@
 import React, { useState } from "react";
 import { useFirestore } from "react-redux-firebase";
-import { Menu, Button, Input, Modal, Icon, Form } from "semantic-ui-react";
+import {
+  Menu,
+  Button,
+  Input,
+  Modal,
+  Icon,
+  Form,
+  Image,
+} from "semantic-ui-react";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import * as firebase from "firebase/app";
 import "firebase/auth";
+import rectangleLogo from "../../assets/rectangleLogo.png";
 
 import { Recipe } from "./../../reducers/interfaces";
 import { useSelector } from "react-redux";
@@ -152,8 +161,8 @@ const TopNav = (props: Props) => {
   return (
     <div>
       <Menu color="teal" pointing secondary stackable>
-        <Menu.Item>
-          <img />
+        <Menu.Item style={{paddingTop:"0px",paddingBottom:"0px",paddingLeft:"10px"}}>
+          <Image src={rectangleLogo} size="tiny"/>
         </Menu.Item>
         {Links}
         <Menu.Menu position="right">
@@ -163,9 +172,6 @@ const TopNav = (props: Props) => {
           <Menu.Item>
             <AddRecipeModal />
           </Menu.Item>
-          {/* <Menu.Item>
-            {user==null ? <div /> : user.uid}
-          </Menu.Item> */}
           <Menu.Item position="right">
             <Button fluid color="red" align="center" onClick={signOut}>
               Sign Out
