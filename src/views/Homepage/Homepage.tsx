@@ -16,7 +16,7 @@ import {
 } from "semantic-ui-react";
 import "./Homepage.css";
 
-import FullLogo from "../../Components/FullLogo/FullLogo"
+import FullLogo from "../../Components/Logos/FullLogo"
 import rectangleLogo from "../../assets/rectangleLogo.png";
 import recipes from "../../assets/recipes.png";
 
@@ -57,8 +57,9 @@ export default function Homepage() {
         }}
       >
         <Container text style={{ marginTop: "10vh" }}>
-          {/* <Header as = "h1" size="huge" inverted>Meal Planner</Header> */}
-          <FullLogo />
+          <Container style={{maxWidth:"100px"}}>
+            <FullLogo/>
+          </Container>
           <Visibility onTopPassed={() => console.log("")}>
             <Ref innerRef={buttonRef}>
               <Button
