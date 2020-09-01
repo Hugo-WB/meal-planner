@@ -130,18 +130,9 @@ const Authenticate = () => {
         style={{ height: "100vh", backgroundColor: "205, 214, 221" }}
       >
         <Grid.Column style={{ maxWidth: "500px" }}>
-          <Header
-            textAlign="center"
-            color="orange"
-            size="huge"
-            dividing
-            style={{ paddingBottom: "20px" }}
-          >
-            {/* <Icon name="food" size="huge" />
-            Meal Planner */}
-            <Image src={rectangleLogo} />
-
-          </Header>
+          <Grid.Row style={{marginBottom:"20px"}}>
+            <Image src={rectangleLogo} size="medium" centered verticalAlign="middle" />
+          </Grid.Row>
           <Form size="large">
             <Segment piled>
               <Form.Input
