@@ -5,8 +5,9 @@ import * as firebase from "firebase/app";
 import "firebase/auth";
 import { useHistory, Link } from "react-router-dom";
 
-import MiniLogo from "../../Components/Logos/MiniLogo"
-import rectangleLogo from "../../assets/rectangleLogo.png"
+import MiniLogo from "../../Components/Logos/MiniLogo";
+import rectangleLogo from "../../assets/rectangleLogo.png";
+import FullLogo from "../../Components/Logos/FullLogo";
 
 // CSS
 import {
@@ -34,9 +35,9 @@ const Authenticate = () => {
     password: false,
     message: "",
   });
-  const addUserToFirestore = (user:any) =>{
-    db.collection("users").doc(user.uid).set(user)
-  }
+  const addUserToFirestore = (user: any) => {
+    db.collection("users").doc(user.uid).set(user);
+  };
 
   const login = () => {
     firebase
@@ -66,17 +67,17 @@ const Authenticate = () => {
       .then((result) => {
         if (result.user != null) {
           addUserToFirestore({
-            uid:result.user.uid,
-            username:"Gmail Koala",
-            email:result.user.email,
-          })
-          history.push("/dashboard")
+            uid: result.user.uid,
+            username: "Gmail Koala",
+            email: result.user.email,
+          });
+          history.push("/dashboard");
         }
       })
       .catch((error) => {
         let errorCode = error.code;
         let errorMessage = error.message;
-        console.log(errorCode,errorMessage)
+        console.log(errorCode, errorMessage);
         let email = error.email;
         let credential = error.credential;
       });
@@ -90,10 +91,10 @@ const Authenticate = () => {
         if (result.user != null) {
           console.log(result.user);
           addUserToFirestore({
-            uid:result.user.uid,
-            username:"Anonymous Koala",
-            email:result.user.email,
-          })
+            uid: result.user.uid,
+            username: "Anonymous Koala",
+            email: result.user.email,
+          });
 
           history.push("/dashboard");
         }
@@ -111,10 +112,10 @@ const Authenticate = () => {
       .then((result) => {
         if (result.user != null) {
           addUserToFirestore({
-            uid:result.user.uid,
-            username:"Koala",
-            email:result.user.email,
-          })
+            uid: result.user.uid,
+            username: "Koala",
+            email: result.user.email,
+          });
         }
         history.push("/dashboard");
       })
@@ -125,7 +126,6 @@ const Authenticate = () => {
       });
   };
 
-
   return (
     <div>
       <Grid
@@ -134,8 +134,8 @@ const Authenticate = () => {
         style={{ height: "100vh", backgroundColor: "205, 214, 221" }}
       >
         <Grid.Column style={{ maxWidth: "500px" }}>
-          <Grid.Row style={{marginBottom:"20px"}}>
-            <Image src={rectangleLogo} size="medium" centered verticalAlign="middle" />
+          <Grid.Row style={{ marginBottom: "20px" }}>
+            <FullLogo />
           </Grid.Row>
           <Form size="large">
             <Segment piled>
