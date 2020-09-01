@@ -12,6 +12,7 @@ import {
   Message,
   Modal,
 } from "semantic-ui-react";
+import rectangleLogo from "../../assets/rectangleLogo.png"
 import { useFirebase } from "react-redux-firebase";
 import * as firebase from "firebase/app";
 import "firebase/auth";
@@ -136,8 +137,10 @@ const Authenticate = () => {
             dividing
             style={{ paddingBottom: "20px" }}
           >
-            <Icon name="food" size="huge" />
-            Meal Planner
+            {/* <Icon name="food" size="huge" />
+            Meal Planner */}
+            <Image src={rectangleLogo} />
+
           </Header>
           <Form size="large">
             <Segment piled>
