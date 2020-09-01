@@ -1,5 +1,14 @@
 import React, { useState } from "react";
 
+import { useFirebase } from "react-redux-firebase";
+import * as firebase from "firebase/app";
+import "firebase/auth";
+import { useHistory, Link } from "react-router-dom";
+
+import MiniLogo from "../../Components/Logos/MiniLogo"
+import rectangleLogo from "../../assets/rectangleLogo.png"
+
+// CSS
 import {
   Grid,
   Container,
@@ -12,11 +21,6 @@ import {
   Message,
   Modal,
 } from "semantic-ui-react";
-import rectangleLogo from "../../assets/rectangleLogo.png"
-import { useFirebase } from "react-redux-firebase";
-import * as firebase from "firebase/app";
-import "firebase/auth";
-import { useHistory, Link } from "react-router-dom";
 
 const Authenticate = () => {
   const history = useHistory();
