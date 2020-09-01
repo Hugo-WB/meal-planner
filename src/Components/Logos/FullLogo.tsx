@@ -15,10 +15,8 @@ export default function Fulllogo() {
     });
   });
   return (
-    <div className="FullLogoDiv" style={{ height: "100%", width: "100%" }}>
+    <div className="FullLogoDiv" style={{ height: "100%", width: "auto" }}>
       <svg
-        // width="934"
-        // height="400"
         viewBox="0 0 934 400"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

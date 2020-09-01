@@ -1,5 +1,20 @@
 import React, { useState } from "react";
 import { useFirestore } from "react-redux-firebase";
+import { useSelector } from "react-redux";
+import { Link, useLocation, useHistory } from "react-router-dom";
+
+import * as firebase from "firebase/app";
+import "firebase/auth";
+
+//TYPES:
+import { Recipe } from "./../../reducers/interfaces";
+import { RootState } from "../../reducers/store";
+
+// import rectangleLogo from "../../assets/rectangleLogo.png";
+import FullLogo from "../../Components/Logos/FullLogo";
+import MiniLogo from "../../Components/Logos/MiniLogo";
+
+// CSS:
 import {
   Menu,
   Button,
@@ -8,16 +23,11 @@ import {
   Icon,
   Form,
   Image,
+  Container,
 } from "semantic-ui-react";
-import { Link, useLocation, useHistory } from "react-router-dom";
-import * as firebase from "firebase/app";
-import "firebase/auth";
-import rectangleLogo from "../../assets/rectangleLogo.png";
 
-import { Recipe } from "./../../reducers/interfaces";
-import { useSelector } from "react-redux";
-import { RootState } from "../../reducers/store";
 interface Props {}
+
 const AddRecipeModal = () => {
   const firestore = useFirestore();
   const history = useHistory();
@@ -161,8 +171,8 @@ const TopNav = (props: Props) => {
   return (
     <div>
       <Menu color="teal" pointing secondary stackable>
-        <Menu.Item style={{paddingTop:"0px",paddingBottom:"0px",paddingLeft:"10px"}}>
-          <Image src={rectangleLogo} size="tiny"/>
+        <Menu.Item style={{height:"40px",width:"40px",padding:"0px"}}>
+          <MiniLogo />
         </Menu.Item>
         {Links}
         <Menu.Menu position="right">
