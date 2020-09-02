@@ -27,13 +27,8 @@ export default function Homepage() {
   useEffect(() => {
     anime({
       targets: buttonRef.current,
-      duration: 2000,
+      duration: 5500,
       scale: 2,
-    });
-    anime({
-      targets: "#logo #logo path",
-      duration: 2000,
-      scale: [0.5, 1],
     });
   });
 
@@ -56,7 +51,7 @@ export default function Homepage() {
           backgroundSize: "cover",
         }}
       >
-        <Container text style={{ marginTop: "10vh" }}>
+        <Container text style={{ marginTop: "15vh" }}>
           <Container style={{maxWidth:"100px"}}>
             <FullLogo/>
           </Container>
@@ -83,7 +78,7 @@ export default function Homepage() {
 
       <Segment id="informationSegment">
         <Grid centerd container stackable verticalAlign="middle">
-          <Visibility onTopVisible={()=>anime({targets:"#firstRow",translateX:["800px","0px"],duration:3000})} />
+          <Visibility onTopVisible={()=>anime({targets:"#firstRow",translateX:["800px","0px"],duration:4000})} />
             <Grid.Row columns="equal" textAlign="center" id="firstRow">
               <Grid.Column width={3}>
                 <Header size="huge">More than 50 Recipes</Header>
@@ -94,12 +89,14 @@ export default function Homepage() {
               </Grid.Column>
             </Grid.Row>
 
-          <Grid.Row>
+          <Visibility onTopVisible={()=>anime({targets:"#secondRow",translateX:["-1000px","0px"],duration:4000})} />
+          <Grid.Row columns="equal" textAlign="center" id="secondRow">
             <Grid.Column>
               <Image />
             </Grid.Column>
             <Grid.Column width={3}>
               <Header size="huge">Bespoke weekly plans</Header>
+              <p>Automatically Generated according to your preferences</p>
             </Grid.Column>
           </Grid.Row>
         </Grid>

@@ -32,7 +32,6 @@ const Plan = () => {
     if ((events.length < 1)&&(users[localUserUID].events!==undefined)){
       setEvents(users[localUserUID].events)
     }
-
   }
 
 

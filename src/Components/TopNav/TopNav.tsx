@@ -171,9 +171,12 @@ const TopNav = (props: Props) => {
   return (
     <div>
       <Menu color="teal" pointing secondary stackable>
-        <Menu.Item style={{height:"40px",width:"40px",padding:"0px"}}>
-          <MiniLogo />
-        </Menu.Item>
+        {/* <Menu.Item style={{padding:"0px",height:"100%",paddingRight:"10px"}}>
+          <Image size="mini" style={{paddingTop:"0px",paddingBottom:"0px"}}>
+            <MiniLogo />
+          </Image>
+        </Menu.Item> */}
+
         {Links}
         <Menu.Menu position="right">
           <Menu.Item>
