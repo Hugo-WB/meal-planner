@@ -22,6 +22,7 @@
     "faker": "^4.1.0",
     "firebase": "^7.17.1",
     "firebaseui": "^4.6.1",
+    "local-iso-dt": "^2.0.0",
     "react": "^16.13.1",
     "react-anime": "^3.0.3",
     "react-dom": "^16.13.1",
