@@ -65,12 +65,15 @@ const Authenticate = () => {
       .auth()
       .signInWithPopup(provider)
       .then((result) => {
-        if (result.user != null) {
-          addUserToFirestore({
-            uid: result.user.uid,
-            username: "Gmail Koala",
-            email: result.user.email,
-          });
+        console.log(result)
+        if (result.user !== null){
+          if (result.operationType !== "signIn"){
+            addUserToFirestore({
+              uid: result.user.uid,
+              username: "Gmail Koala",
+              email: result.user.email,
+            });
+          }
           history.push("/dashboard");
         }
       })

@@ -58,8 +58,16 @@ export default function Homepage() {
             icon
             color="teal"
             id="startButton"
-            onMouseEnter={() => anime({ targets: "#startButton", scale: 2.05 })}
-            onMouseLeave={() => anime({ targets: "#startButton", scale: 2 })}
+            onMouseEnter={() =>
+              anime({ targets: "#startButton", scale: 2.1, translateY: -2 })
+            }
+            onMouseLeave={() =>
+              anime({
+                targets: "#startButton",
+                scale: 2,
+                translateY: 2,
+              })
+            }
           >
             Start
             <Icon name="arrow right" />
