@@ -16,16 +16,17 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 // TYPES/INTERFACES:
 import { RootState } from "../../reducers/store";
 import {
-  UnformattedEvents,
-  FormattedEvents,
+  Event,
+  Events,
   FormattedEvent,
+  FormattedEvents,
 } from "./../../types";
 
 const Plan = () => {
   const firestore = useFirestore();
   const history = useHistory();
 
-  const [events, setEvents] = useState<UnformattedEvents>([["test","test","test"],["test","test","test"],["test","test","test"],["test","test","test"],["test","test","test"],["test","test","test"],["test","test","test"]]);
+  const [events, setEvents] = useState<Events>([]);
   const localUserUID = useSelector(
     (state: RootState) => state.localData.user.uid
   );
@@ -43,77 +44,67 @@ const Plan = () => {
     } catch (error) {}
   });
 
-  const generateEvents = ():UnformattedEvents => {
+  const generateEvents = ():Events=> {
     console.log("generating events");
-    let unformattedEvents:UnformattedEvents = []
-
+    let events:Events = []
+    let mealTimes:[number,number][][] = [[[8,0],[9,0]],[[12,0],[13,0]],[[19,0],[20,0]]]
     for (let day = 0; day < 7; day++) {
-      let meals:string[] = []
+      let meals:Events = []
       for (let meal=0; meal<3;meal++) {
-        meals.push("test")
+        meals.push({
+          title:"test",
+          start:mealTimes[meal][0],
+          end:mealTimes[meal][1],
+          weekDay:day,
+        })
       }
       console.log(meals)
-      unformattedEvents.push([ meals ])
+      events = events.concat(meals)
     }
     console.log("generated")
-    console.log(unformattedEvents)
+    console.log(events)
     
-    // if (localUserUID !== undefined) {
-    //   console.log("firestore", events);
-    //   firestore
-    //     .collection("users")
-    //     .doc(localUserUID)
-    //     .update({
-    //       events: unformattedEvents,
-    //     })
-    //     .then(() => {
-    //       console.log("successfull, added events to firestore");
-    //     })
-    //     .catch((error) => {
-    //       alert(error.message);
-    //     });
-    //   } else {
-    //     alert("please login");
-    //     history.push("/");
-    //   }
-    setEvents(unformattedEvents);
-    return unformattedEvents
+    if (localUserUID !== undefined) {
+      console.log("firestore", events);
+      firestore
+        .collection("users")
+        .doc(localUserUID)
+        .update({
+          events: events,
+        })
+        .then(() => {
+          console.log("successfull, added events to firestore");
+          setEvents(events);
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    } else {
+      alert("please login");
+      history.push("/");
+    }
+    return events 
   };
 
-  const getFormattedEvents = (unformatted: UnformattedEvents):FormattedEvents => {
+  const getFormattedEvents = (unformatted: Events):FormattedEvents => {
     console.log("UNFORMATTED INPUT")
     console.log(unformatted)
-    let mealTimes = [[8,9],[12,13],[19,20]]
     let output:any[] = []
     let now = new Date()
     let dayOfWeek = ( ( now.getDay() +6 ) % 7 )
-    for (let day = 0; day < 7; day++) {
+
+    for (let event = 0; event < unformatted.length; event++){
       let dayDate = new Date()
-      dayDate.setDate(now.getDate()-dayOfWeek+day)
-      let breakfast = [ new Date(dayDate.setHours(mealTimes[0][0],0,0,0)), new Date(dayDate.setHours(mealTimes[0][1],0,0,0))]
-      let lunch = [ new Date(dayDate.setHours(mealTimes[1][0],0,0,0)), new Date(dayDate.setHours(mealTimes[1][1],0,0,0))]
-      let dinner = [ new Date(dayDate.setHours(mealTimes[2][0],0,0,0)), new Date(dayDate.setHours(mealTimes[2][1],0,0,0))]
-
+      dayDate.setDate(now.getDate()-dayOfWeek+unformatted[event].weekDay)
+      let startTime = new Date(dayDate.setHours(unformatted[event].start[0],unformatted[event].start[1],0,0))
+      let endTime = new Date(dayDate.setHours(unformatted[event].end[0],unformatted[event].end[1],0,0))
+      let formattedEvent = {
+        title: unformatted[event].title,
+        start: startTime.toISOString(),
+        end: endTime.toISOString(),
+      }
       
-      let meals = [
-        {
-        title:unformatted[day][0],
-        start:breakfast[0].toISOString(),
-        end:breakfast[1].toISOString(),
-        },
-        {
-        title:unformatted[day][1],
-        start:lunch[0].toISOString(),
-        end:lunch[1].toISOString(),
-        },
-        {
-        title:unformatted[day][0],
-        start:dinner[0].toISOString(),
-        end:dinner[1].toISOString(),
-        },
-      ]
-
-      output = output.concat(meals)
+      output = output.concat(formattedEvent)
     }
     console.log(output)
     return output;
@@ -138,7 +129,9 @@ const Plan = () => {
         plugins={[timeGridPlugin]}
         initialView="timeGridWeek"
         events={getFormattedEvents(events)}
+        firstDay={1}
         height={"100%"}
+        eventClick={(click)=>console.log(click)}
       />
       {form}
     </Container>
