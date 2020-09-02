@@ -1,5 +1,13 @@
 import React, { useState, ReactElement } from "react";
-import { Card, Image, Modal, Header, List, Grid, Icon } from "semantic-ui-react";
+import {
+  Card,
+  Image,
+  Modal,
+  Header,
+  List,
+  Grid,
+  Icon,
+} from "semantic-ui-react";
 
 interface Props {
   name: string;
@@ -8,27 +16,25 @@ interface Props {
   description: string;
   ingredients: string[];
   steps: string;
-  author:string;
+  author: string;
 }
 
 export default function RecipeCard(props: Props): ReactElement {
-  const [showRecipe,setShowRecipe] = useState(false);
-  const [showUser,setShowUser] = useState(false);
+  const [showRecipe, setShowRecipe] = useState(false);
+  const [showUser, setShowUser] = useState(false);
 
   const Recipe = (
-    <Modal open={showRecipe} closeIcon onClose={()=>setShowRecipe(false)}>
+    <Modal open={showRecipe} closeIcon onClose={() => setShowRecipe(false)}>
       <Modal.Header>
         <Grid columns="equal" textAlign="center" container>
-          <Grid.Column>
-            {props.name}
-          </Grid.Column>
-          <Grid.Column textAlign ="right">
-            <a href="#" onClick={()=>setShowUser(true)}>
-            {props.author}
-            </a>
+          <Grid.Column>{props.name}</Grid.Column>
+          <Grid.Column textAlign="right">
+            <p onClick={() => setShowUser(true)} style={{ cursor: "pointer" }}>
+              {props.author}
+            </p>
           </Grid.Column>
         </Grid>
-        </Modal.Header>
+      </Modal.Header>
       <Modal.Content image>
         <Image size="medium" src={props.imageSrc} />
         <Modal.Description>
@@ -43,19 +49,16 @@ export default function RecipeCard(props: Props): ReactElement {
         </Modal.Description>
       </Modal.Content>
     </Modal>
-  )
+  );
 
   const User = (
-    <Modal open = {showUser} onClose={()=>setShowUser(false)} closeIcon>
-      <Modal.Header>
-        {props.author}
-      </Modal.Header>
+    <Modal open={showUser} onClose={() => setShowUser(false)} closeIcon>
+      <Modal.Header>{props.author}</Modal.Header>
     </Modal>
-  )
-
+  );
 
   return (
-    <Card onClick={()=>setShowRecipe(true)} style={{margin:"20px"}}>
+    <Card onClick={() => setShowRecipe(true)} style={{ margin: "20px" }}>
       <Image src={props.imageSrc} />
       <Card.Content>
         <Card.Header>{props.name}</Card.Header>
@@ -63,8 +66,8 @@ export default function RecipeCard(props: Props): ReactElement {
         <Card.Description>{props.description}</Card.Description>
       </Card.Content>
       <Card.Content extra>
-          <Icon name="user" color="blue"/>
-            {props.author}
+        <Icon name="user" color="blue" />
+        {props.author}
       </Card.Content>
       {Recipe}
       {User}

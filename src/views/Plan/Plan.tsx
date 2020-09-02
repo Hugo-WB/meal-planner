@@ -23,36 +23,46 @@ const Plan = () => {
   const history = useHistory();
 
   const [events, setEvents] = useState<Event[]>([]);
-  const localUserUID = useSelector((state: RootState) => state.localData.user.uid);
+  const localUserUID = useSelector(
+    (state: RootState) => state.localData.user.uid
+  );
   useFirestoreConnect([{ collection: "users" }]);
   const users = useSelector((state: RootState) => state.firestore.data.users);
-  const loggedIn = useSelector((state:RootState)=> state.localData.loggedIn)
 
-  if ((loggedIn === true)&&(users!==undefined)){
-    if ((events.length < 1)&&(users[localUserUID].events!==undefined)){
-      setEvents(users[localUserUID].events)
+  try {
+    let tempEvents = users[localUserUID].events;
+    if (tempEvents !== undefined && events.length < 1) {
+      setEvents(tempEvents);
     }
+  } catch (error) {
+    console.log(error);
   }
 
-
   const generateEvents = () => {
-    console.log("generating events")
+    console.log("generating events");
     const newEvents = [
       {
         title: "test",
         start: "2020-08-28T17:21",
         end: "2020-08-28T16:00",
       },
-    ]
+    ];
 
     if (localUserUID !== undefined) {
-      console.log("firestore",events)
-      firestore.collection("users").doc(localUserUID).update({
-        events:newEvents
-      }).then(()=>{
-        console.log("successfull, added events to firestore")
-        setEvents(newEvents)
-      }).catch((error)=>{alert(error.message)});
+      console.log("firestore", events);
+      firestore
+        .collection("users")
+        .doc(localUserUID)
+        .update({
+          events: newEvents,
+        })
+        .then(() => {
+          console.log("successfull, added events to firestore");
+          setEvents(newEvents);
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
     } else {
       alert("please login");
       history.push("/");
@@ -60,11 +70,12 @@ const Plan = () => {
   };
 
   const calendar = (
-    <Container style={{ marginTop: "20px"}}>
+    <Container style={{ marginTop: "20px", height: "90vh" }}>
       <FullCalendar
         plugins={[timeGridPlugin]}
         initialView="timeGridWeek"
         events={events}
+        height={"100%"}
       />
     </Container>
   );

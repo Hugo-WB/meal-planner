@@ -193,7 +193,7 @@ const Authenticate = () => {
               </Button>
             </Segment>
           </Form>
-          {error.message == "" ? (
+          {error.message === "" ? (
             <div></div>
           ) : (
             <Message
