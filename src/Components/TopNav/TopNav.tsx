@@ -56,10 +56,9 @@ const AddRecipeModal = () => {
       var http = new XMLHttpRequest();
       http.open("HEAD", url, false);
       http.send();
-      return http.status != 404;
+      return http.status !== 404;
     };
 
-    let isValid = false;
     if (
       recipe.name.length > 0 &&
       recipe.description.length > 0 &&
@@ -67,7 +66,6 @@ const AddRecipeModal = () => {
       recipe.steps.length > 0 &&
       recipe.ingredients.length > 0
     ) {
-      isValid = true;
       firestore.collection("recipes").add(recipe);
       setOpen(false);
       history.push("/recipes");
@@ -148,8 +146,8 @@ const TopNav = (props: Props) => {
   const links: string[] = ["dashboard", "plan", "recipes"];
   const history = useHistory();
   const Links = links.map((link) => (
-    <Link to={"/" + link}>
-      <Menu.Item link active={location.pathname == "/" + link}>
+    <Link to={"/" + link} key={link}>
+      <Menu.Item link active={location.pathname === "/" + link}>
         {link.charAt(0).toUpperCase() + link.slice(1)}
       </Menu.Item>
     </Link>
