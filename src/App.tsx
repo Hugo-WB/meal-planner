@@ -12,6 +12,7 @@ import "./App.css";
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import { RootState } from "./reducers/store";
+import { useFirestoreConnect } from "react-redux-firebase";
 
 interface route {
   path: string;
