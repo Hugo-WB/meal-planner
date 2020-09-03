@@ -62,21 +62,6 @@ const App = () => {
     ))
 
   )
-
-  return (
-    <div>
-      <Router>
-        <Switch>
-          {loggedIn ? <SecureRoutes />:""}
-          {unsecureRoutesJSX}
-        </Switch>
-      </Router>
-    </div>
-  );
-};
-
-const SecureRoutes = () =>{
-  let {path,url} = useRouteMatch()
   const secureRoutes: route[] = [
     {
       path: "/dashboard",
@@ -96,13 +81,47 @@ const SecureRoutes = () =>{
       <Route path={route.path} component={route.component} exact={true} />
     ))
   )
+
   return (
     <div>
-      {secureRoutesJSX}
-
+      <Router>
+        <Switch>
+          {loggedIn ? secureRoutesJSX:""}
+          {unsecureRoutesJSX}
+        </Switch>
+      </Router>
     </div>
-  )
+  );
+};
 
-}
+// const SecureRoutes = () =>{
+//   // let {path,url} = useRouteMatch()
+//   const secureRoutes: route[] = [
+//     {
+//       path: "/dashboard",
+//       component: Dashboard,
+//     },
+//     {
+//       path: "/recipes",
+//       component: Recipes,
+//     },
+//     {
+//       path: "/plan",
+//       component: Plan,
+//     },
+//   ];
+//   const secureRoutesJSX = (
+//     secureRoutes.map((route) => (
+//       <Route path={route.path} component={route.component} exact={true} />
+//     ))
+//   )
+//   return (
+//     <div>
+//       {secureRoutesJSX}
+
+//     </div>
+//   )
+
+// }
 
 export default connect()(App);
