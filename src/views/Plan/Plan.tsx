@@ -4,7 +4,14 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 // CSS:
-import { Container, Form, Button, Segment, Grid } from "semantic-ui-react";
+import {
+  Container,
+  Form,
+  Button,
+  Segment,
+  Grid,
+  Radio,
+} from "semantic-ui-react";
 
 // Components:
 import TopNav from "./../../Components/TopNav/TopNav";
@@ -22,16 +29,19 @@ const Plan = () => {
   const history = useHistory();
 
   const [events, setEvents] = useState<Events>([]);
-  const [formInputs, setFormInputs] = useState<PlanFormInputs>({
-    breakfast: false,
-    lunch: true,
-    dinner: true,
-  });
+  const intialFormInputs:{[index:string]:boolean} = {
+    "breakfast": false,
+    "lunch": true,
+    "dinner": true,
+  }
+  const [formInputs, setFormInputs] = useState(intialFormInputs);
   const localUserUID = useSelector(
     (state: RootState) => state.localData.user.uid
   );
   useFirestoreConnect([{ collection: "users", doc: localUserUID }]);
+  // useFirestoreConnect({collection:"recipes",where:["meal","==","lunch"]})
   const user = useSelector((state: RootState) => state.firestore.ordered.users);
+  const recipes = useSelector((state:RootState)=>state.firestore)
 
   useEffect(() => {
     try {
@@ -43,6 +53,10 @@ const Plan = () => {
   }, [user, events.length]);
 
   const generateEvents = (): Events => {
+    const breakfastRecipes = firestore.collection("recipes").where("meals","==","breakfast").get().then()
+    const lunchRecipes = firestore.collection("recipes").where("meals","==","lunch")
+    const dinnerRecipes = firestore.collection("recipes").where("meals","==","dinner")
+    console.log(lunchRecipes)
     let events: Events = [];
     let mealTimes: [number, number][][] = [
       [
@@ -58,13 +72,33 @@ const Plan = () => {
         [20, 0],
       ],
     ];
+    const getRandomMealFromRecipes = (recipes:any) =>{
+      return recipes[Math.floor(Math.random()*recipes.length)]
+    }
     for (let day = 0; day < 7; day++) {
       let meals: Events = [];
-      for (let meal = 0; meal < 3; meal++) {
+      if (formInputs.breakfast){
+        meals.push({
+          // title: getRandomMealFromRecipes(breakfastRecipes).name,
+          title:"test",
+          start: mealTimes[0][0],
+          end: mealTimes[0][1],
+          weekDay: day,
+        });
+      }
+      if (formInputs.lunch){
         meals.push({
           title: "test",
-          start: mealTimes[meal][0],
-          end: mealTimes[meal][1],
+          start: mealTimes[1][0],
+          end: mealTimes[1][1],
+          weekDay: day,
+        });
+      }
+      if (formInputs.dinner){
+        meals.push({
+          title: "test",
+          start: mealTimes[2][0],
+          end: mealTimes[2][1],
           weekDay: day,
         });
       }
@@ -79,6 +113,7 @@ const Plan = () => {
         .doc(localUserUID)
         .update({
           events: events,
+          meals:formInputs,
         })
         .then(() => {
           console.log("successfull, added events to firestore");
@@ -129,6 +164,15 @@ const Plan = () => {
     // console.log(output);
     return output;
   };
+  const handleChange = (e:React.FormEvent<HTMLInputElement>,data:any) => {
+    const value:string = data.value
+    setFormInputs((prevFormInputs) => {
+      return {
+        ...prevFormInputs,
+        [value]: !(prevFormInputs[value.toString()]),
+      };
+    });
+  };
 
   const form = (
     <Grid textAlign="center" verticalAlign="middle">
@@ -137,7 +181,24 @@ const Plan = () => {
           <Form>
             <Form.Group inline widths="equal">
               <label>Meals</label>
-              {/* <Form.Radio label="breakfast" value="breakfast" checked={formInputs.breakfast===true} onChange={(e)=>console.log(target)}/> */}
+              <Form.Radio
+                label="breakfast"
+                value="breakfast"
+                checked={formInputs.breakfast}
+                onClick={handleChange}
+              />
+              <Form.Radio
+                label="lunch"
+                value="lunch"
+                checked={formInputs.lunch}
+                onClick={handleChange}
+              />
+              <Form.Radio
+                label="dinner"
+                value="dinner"
+                checked={formInputs.dinner}
+                onClick={handleChange}
+              />
             </Form.Group>
             <Button color="teal" onClick={generateEvents}>
               Generate
@@ -149,6 +210,7 @@ const Plan = () => {
   );
   const calendar = (
     <Container style={{ marginTop: "20px", height: "90vh" }}>
+      {form}
       <FullCalendar
         plugins={[timeGridPlugin]}
         initialView="timeGridWeek"
@@ -157,7 +219,6 @@ const Plan = () => {
         height={"100%"}
         eventClick={(click) => console.log(click)}
       />
-      {form}
     </Container>
   );
 

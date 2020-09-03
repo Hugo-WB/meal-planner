@@ -13,7 +13,7 @@ interface State {}
 
 const RecipeCards: React.FC = () => {
   // useFirestoreConnect([{ collection: "recipes"}]);
-  useFirestoreConnect({ collection: "recipes",orderBy:["description","asc"]});
+  useFirestoreConnect({ collection: "recipes"});
   const recipes = useSelector((state: any) => state.firestore.ordered.recipes);
   if (recipes === undefined) {
     return <div></div>;
