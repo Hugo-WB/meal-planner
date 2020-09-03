@@ -1,12 +1,4 @@
-interface User {
-  uid: string;
-  username: string;
-}
-interface LocalData {
-  currentPage: string;
-  loggedIn:boolean;
-  user: User;
-}
+import {LocalData} from "../types"
 const initialState: LocalData = {
   currentPage: "Dashboard",
   loggedIn:false,
