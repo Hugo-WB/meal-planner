@@ -19,6 +19,7 @@ import "./Homepage.css";
 import FullLogo from "../../Components/Logos/FullLogo";
 import rectangleLogo from "../../assets/rectangleLogo.png";
 import recipes from "../../assets/recipes.png";
+import plan from "../../assets/plan.png"
 
 export default function Homepage() {
   const history = useHistory();
@@ -107,7 +108,7 @@ export default function Homepage() {
           />
           <Grid.Row columns="equal" textAlign="center" id="secondRow">
             <Grid.Column>
-              <Image />
+              <Image src={plan}/>
             </Grid.Column>
             <Grid.Column width={3}>
               <Header size="huge">Bespoke weekly plans</Header>
