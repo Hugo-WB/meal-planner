@@ -39,9 +39,11 @@ const Plan = () => {
     (state: RootState) => state.localData.user.uid
   );
   useFirestoreConnect([{ collection: "users", doc: localUserUID }]);
-  // useFirestoreConnect({collection:"recipes",where:["meal","==","lunch"]})
+  useFirestoreConnect({collection:"recipes",where:["meal","==","lunch"],storeAs:"lunchRecipes"})
   const user = useSelector((state: RootState) => state.firestore.ordered.users);
-  const recipes = useSelector((state:RootState)=>state.firestore)
+  const breakfastRecipes = useSelector((state:RootState)=>state.firestore.data.breakfastRecipes)
+  const lunchRecipes = useSelector((state:RootState)=>state.firestore.data.lunchRecipes)
+  const dinnerRecipes= useSelector((state:RootState)=>state.firestore.data.dinnerRecipes)
 
   useEffect(() => {
     try {
@@ -53,10 +55,6 @@ const Plan = () => {
   }, [user, events.length]);
 
   const generateEvents = (): Events => {
-    const breakfastRecipes = firestore.collection("recipes").where("meals","==","breakfast").get().then()
-    const lunchRecipes = firestore.collection("recipes").where("meals","==","lunch")
-    const dinnerRecipes = firestore.collection("recipes").where("meals","==","dinner")
-    console.log(lunchRecipes)
     let events: Events = [];
     let mealTimes: [number, number][][] = [
       [
@@ -73,14 +71,26 @@ const Plan = () => {
       ],
     ];
     const getRandomMealFromRecipes = (recipes:any) =>{
-      return recipes[Math.floor(Math.random()*recipes.length)]
+      try{
+        recipes = Object.values(recipes)
+        if (recipes.length <1){
+          return {
+            "name":"No Recipes"
+          }
+        }else{
+          return recipes[Math.floor(Math.random()*recipes.length)]
+        }
+      }catch(error){
+        return {
+          "name":"No Recipes"
+        }
+      }
     }
     for (let day = 0; day < 7; day++) {
       let meals: Events = [];
       if (formInputs.breakfast){
         meals.push({
-          // title: getRandomMealFromRecipes(breakfastRecipes).name,
-          title:"test",
+          title: getRandomMealFromRecipes(breakfastRecipes).name,
           start: mealTimes[0][0],
           end: mealTimes[0][1],
           weekDay: day,
@@ -88,7 +98,7 @@ const Plan = () => {
       }
       if (formInputs.lunch){
         meals.push({
-          title: "test",
+          title: getRandomMealFromRecipes(lunchRecipes).name,
           start: mealTimes[1][0],
           end: mealTimes[1][1],
           weekDay: day,
@@ -96,7 +106,7 @@ const Plan = () => {
       }
       if (formInputs.dinner){
         meals.push({
-          title: "test",
+          title: getRandomMealFromRecipes(dinnerRecipes).name,
           start: mealTimes[2][0],
           end: mealTimes[2][1],
           weekDay: day,
@@ -210,7 +220,6 @@ const Plan = () => {
   );
   const calendar = (
     <Container style={{ marginTop: "20px", height: "90vh" }}>
-      {form}
       <FullCalendar
         plugins={[timeGridPlugin]}
         initialView="timeGridWeek"
@@ -225,7 +234,8 @@ const Plan = () => {
   return (
     <div>
       <TopNav />
-      {events.length < 1 ? form : calendar}
+      {events.length < 1 ? "" : calendar}
+      {form}
     </div>
   );
 };

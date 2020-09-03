@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch } from "react-router-dom";
 
 import Homepage from "./views/Homepage/Homepage";
 import Dashboard from "./views/Dashboard/Dashboard";
@@ -13,6 +13,7 @@ import * as firebase from "firebase/app";
 import "firebase/auth";
 import { RootState } from "./reducers/store";
 import { useFirestoreConnect } from "react-redux-firebase";
+import TopNav from "./Components/TopNav/TopNav";
 
 interface route {
   path: string;
@@ -20,20 +21,12 @@ interface route {
 }
 
 const App = () => {
-  const secureRoutes: route[] = [
-    {
-      path: "/dashboard",
-      component: Dashboard,
-    },
-    {
-      path: "/recipes",
-      component: Recipes,
-    },
-    {
-      path: "/plan",
-      component: Plan,
-    },
-  ];
+  // PRE LOAD DATA:
+  useFirestoreConnect({collection:"recipes",where:["meal","==","breakfast"],storeAs:"breakfastRecipes"})
+  useFirestoreConnect({collection:"recipes",where:["meal","==","lunch"],storeAs:"lunchRecipes"})
+  useFirestoreConnect({collection:"recipes",where:["meal","==","dinner"],storeAs:"dinnerRecipes"})
+  useFirestoreConnect({ collection: "recipes"});
+
   const unsecureRoutes:route[]=[
     {
       path: "/authenticate",
@@ -63,11 +56,6 @@ const App = () => {
     }
   });
 
-  const secureRoutesJSX = (
-    secureRoutes.map((route) => (
-      <Route path={route.path} component={route.component} exact={true} />
-    ))
-  )
   const unsecureRoutesJSX = (
     unsecureRoutes.map((route) => (
       <Route path={route.path} component={route.component} exact={true} />
@@ -79,12 +67,45 @@ const App = () => {
     <div>
       <Router>
         <Switch>
-          {loggedIn ? secureRoutesJSX:""}
+          <Route path = "/loggedin">
+            {loggedIn ? <SecureRoutes />:""}
+          </Route>
           {unsecureRoutesJSX}
         </Switch>
       </Router>
     </div>
   );
 };
+
+const SecureRoutes = () =>{
+  let {path,url} = useRouteMatch()
+  const secureRoutes: route[] = [
+    {
+      path: "/dashboard",
+      component: Dashboard,
+    },
+    {
+      path: "/recipes",
+      component: Recipes,
+    },
+    {
+      path: "/plan",
+      component: Plan,
+    },
+  ];
+  const secureRoutesJSX = (
+    secureRoutes.map((route) => (
+      <Route path={path+route.path} component={route.component} exact={true} />
+    ))
+  )
+  return (
+    <Switch>
+      <TopNav />
+      {secureRoutesJSX}
+
+    </Switch>
+  )
+
+}
 
 export default connect()(App);

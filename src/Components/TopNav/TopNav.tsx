@@ -142,6 +142,7 @@ const AddRecipeModal = () => {
 };
 
 const TopNav = (props: Props) => {
+
   const location = useLocation();
   const links: string[] = ["dashboard", "plan", "recipes"];
   const history = useHistory();
