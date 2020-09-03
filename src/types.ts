@@ -1,3 +1,14 @@
+// TYPES FOR LOCAL DATA:
+
+export interface User {
+  uid: string;
+  username: string;
+}
+export interface LocalData {
+  currentPage: string;
+  loggedIn:boolean;
+  user: User;
+}
 // TYPES FOR CALENDAR:
 
 export interface Event {
@@ -14,3 +25,9 @@ export interface FormattedEvent {
   end:string,
 }
 export type FormattedEvents = FormattedEvent[]
+
+export interface PlanFormInputs {
+  breakfast:boolean,
+  lunch:boolean,
+  dinner:boolean,
+}
