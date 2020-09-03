@@ -67,9 +67,7 @@ const App = () => {
     <div>
       <Router>
         <Switch>
-          <Route path = "/loggedin">
-            {loggedIn ? <SecureRoutes />:""}
-          </Route>
+          {loggedIn ? <SecureRoutes />:""}
           {unsecureRoutesJSX}
         </Switch>
       </Router>
@@ -95,15 +93,14 @@ const SecureRoutes = () =>{
   ];
   const secureRoutesJSX = (
     secureRoutes.map((route) => (
-      <Route path={path+route.path} component={route.component} exact={true} />
+      <Route path={route.path} component={route.component} exact={true} />
     ))
   )
   return (
-    <Switch>
-      <TopNav />
+    <div>
       {secureRoutesJSX}
 
-    </Switch>
+    </div>
   )
 
 }
