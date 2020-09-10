@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "21f7cd2677c655ce37740070495312e3",
+    "revision": "6608af41c3f0dc07fc51d31a85ad9f50",
     "url": "/meal-planner/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/meal-planner/static/css/2.25f320de.chunk.css"
   },
   {
-    "revision": "01c7a48c4b9ec85d1ba4",
+    "revision": "307006702d900f4670dc",
     "url": "/meal-planner/static/css/main.a688cb7b.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/meal-planner/static/js/2.05a36f4b.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "01c7a48c4b9ec85d1ba4",
-    "url": "/meal-planner/static/js/main.626375e5.chunk.js"
+    "revision": "307006702d900f4670dc",
+    "url": "/meal-planner/static/js/main.d637d9b4.chunk.js"
   },
   {
     "revision": "4f01fd596bbda544455b",
