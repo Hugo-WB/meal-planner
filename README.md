@@ -16,13 +16,13 @@ Landing Page
 
 Authentication Page
 
-![image-20200910182620339](.\pictures\authenticationPage.png)
+![Authentication page image](https://github.com/Hugo-WB/meal-planner/blob/master/pictures/recipesPage.png)
 
 
 
 Recipes Page
 
-![image-20200910182620339](.\pictures\recipesPage.png)
+![Recipe page image](https://github.com/Hugo-WB/meal-planner/blob/master/pictures/recipesPage.png)
 
 ## Learn More
 
