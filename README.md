@@ -10,7 +10,7 @@ Used Firestore for live updates of recipes created by other users
 
 Landing Page
 
-![image-20200910182620339](.\pictures\landingPage.png)
+![Landing page image](https://github.com/Hugo-WB/meal-planner/blob/master/pictures/landingPage.png)
 
 
 
