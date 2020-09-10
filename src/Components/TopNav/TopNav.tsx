@@ -144,7 +144,7 @@ const AddRecipeModal = () => {
 const TopNav = (props: Props) => {
 
   const location = useLocation();
-  const links: string[] = ["dashboard", "plan", "recipes"];
+  const links: string[] = ["plan", "recipes"];
   const history = useHistory();
   const Links = links.map((link) => (
     <Link to={"/" + link} key={link}>
@@ -170,17 +170,11 @@ const TopNav = (props: Props) => {
   return (
     <div>
       <Menu color="teal" pointing secondary stackable>
-        {/* <Menu.Item style={{padding:"0px",height:"100%",paddingRight:"10px"}}>
-          <Image size="mini" style={{paddingTop:"0px",paddingBottom:"0px"}}>
-            <MiniLogo />
-          </Image>
-        </Menu.Item> */}
-
         {Links}
         <Menu.Menu position="right">
-          <Menu.Item>
+          {/* <Menu.Item>
             <Input icon="search" placeholder="Search..." color="teal" />
-          </Menu.Item>
+          </Menu.Item> */}
           <Menu.Item>
             <AddRecipeModal />
           </Menu.Item>

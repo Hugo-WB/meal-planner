@@ -64,10 +64,6 @@ const App = () => {
   )
   const secureRoutes: route[] = [
     {
-      path: "/dashboard",
-      component: Dashboard,
-    },
-    {
       path: "/recipes",
       component: Recipes,
     },

@@ -26,6 +26,7 @@ import {
 const Authenticate = () => {
   const history = useHistory();
   let db = firebase.firestore();
+  const homepage:string = "/plan"
   const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",
@@ -50,7 +51,7 @@ const Authenticate = () => {
           //   email: result.user.email,
           // });
         }
-        history.push("/dashboard");
+        history.push(homepage);
       })
       .catch((error) => {
         let errorCode = error.code;
@@ -74,7 +75,7 @@ const Authenticate = () => {
               email: result.user.email,
             });
           }
-          history.push("/dashboard");
+          history.push(homepage);
         }
       })
       .catch((error) => {
@@ -99,7 +100,7 @@ const Authenticate = () => {
             email: result.user.email,
           });
 
-          history.push("/dashboard");
+          history.push(homepage);
         }
       })
       .catch((error) => {

@@ -15,6 +15,7 @@ import {
 
 // Components:
 import TopNav from "./../../Components/TopNav/TopNav";
+import PlanRecipes from "../../Components/PlanRecipes/PlanRecipes";
 
 // EXTERNAL COMPONENTS:
 import FullCalendar from "@fullcalendar/react";
@@ -29,21 +30,31 @@ const Plan = () => {
   const history = useHistory();
 
   const [events, setEvents] = useState<Events>([]);
-  const intialFormInputs:{[index:string]:boolean} = {
-    "breakfast": false,
-    "lunch": true,
-    "dinner": true,
-  }
+  const intialFormInputs: { [index: string]: boolean } = {
+    breakfast: false,
+    lunch: true,
+    dinner: true,
+  };
   const [formInputs, setFormInputs] = useState(intialFormInputs);
   const localUserUID = useSelector(
     (state: RootState) => state.localData.user.uid
   );
   useFirestoreConnect([{ collection: "users", doc: localUserUID }]);
-  useFirestoreConnect({collection:"recipes",where:["meal","==","lunch"],storeAs:"lunchRecipes"})
+  useFirestoreConnect({
+    collection: "recipes",
+    where: ["meal", "==", "lunch"],
+    storeAs: "lunchRecipes",
+  });
   const user = useSelector((state: RootState) => state.firestore.ordered.users);
-  const breakfastRecipes = useSelector((state:RootState)=>state.firestore.data.breakfastRecipes)
-  const lunchRecipes = useSelector((state:RootState)=>state.firestore.data.lunchRecipes)
-  const dinnerRecipes= useSelector((state:RootState)=>state.firestore.data.dinnerRecipes)
+  const breakfastRecipes = useSelector(
+    (state: RootState) => state.firestore.data.breakfastRecipes
+  );
+  const lunchRecipes = useSelector(
+    (state: RootState) => state.firestore.data.lunchRecipes
+  );
+  const dinnerRecipes = useSelector(
+    (state: RootState) => state.firestore.data.dinnerRecipes
+  );
 
   useEffect(() => {
     try {
@@ -70,25 +81,25 @@ const Plan = () => {
         [20, 0],
       ],
     ];
-    const getRandomMealFromRecipes = (recipes:any) =>{
-      try{
-        recipes = Object.values(recipes)
-        if (recipes.length <1){
+    const getRandomMealFromRecipes = (recipes: any) => {
+      try {
+        recipes = Object.values(recipes);
+        if (recipes.length < 1) {
           return {
-            "name":"No Recipes"
-          }
-        }else{
-          return recipes[Math.floor(Math.random()*recipes.length)]
+            name: "No Recipes",
+          };
+        } else {
+          return recipes[Math.floor(Math.random() * recipes.length)];
         }
-      }catch(error){
+      } catch (error) {
         return {
-          "name":"No Recipes"
-        }
+          name: "No Recipes",
+        };
       }
-    }
+    };
     for (let day = 0; day < 7; day++) {
       let meals: Events = [];
-      if (formInputs.breakfast){
+      if (formInputs.breakfast) {
         meals.push({
           title: getRandomMealFromRecipes(breakfastRecipes).name,
           start: mealTimes[0][0],
@@ -96,7 +107,7 @@ const Plan = () => {
           weekDay: day,
         });
       }
-      if (formInputs.lunch){
+      if (formInputs.lunch) {
         meals.push({
           title: getRandomMealFromRecipes(lunchRecipes).name,
           start: mealTimes[1][0],
@@ -104,7 +115,7 @@ const Plan = () => {
           weekDay: day,
         });
       }
-      if (formInputs.dinner){
+      if (formInputs.dinner) {
         meals.push({
           title: getRandomMealFromRecipes(dinnerRecipes).name,
           start: mealTimes[2][0],
@@ -114,8 +125,6 @@ const Plan = () => {
       }
       events = events.concat(meals);
     }
-    // console.log("generated");
-    // console.log(events);
 
     if (localUserUID !== undefined) {
       firestore
@@ -123,7 +132,7 @@ const Plan = () => {
         .doc(localUserUID)
         .update({
           events: events,
-          meals:formInputs,
+          meals: formInputs,
         })
         .then(() => {
           console.log("successfull, added events to firestore");
@@ -174,12 +183,12 @@ const Plan = () => {
     // console.log(output);
     return output;
   };
-  const handleChange = (e:React.FormEvent<HTMLInputElement>,data:any) => {
-    const value:string = data.value
+  const handleChange = (e: React.FormEvent<HTMLInputElement>, data: any) => {
+    const value: string = data.value;
     setFormInputs((prevFormInputs) => {
       return {
         ...prevFormInputs,
-        [value]: !(prevFormInputs[value.toString()]),
+        [value]: !prevFormInputs[value.toString()],
       };
     });
   };
@@ -218,6 +227,37 @@ const Plan = () => {
       </Grid.Column>
     </Grid>
   );
+
+  const [numberOfClicks,setNumberOfClicks] = useState(0)
+  const [modalRecipe,setModalRecipe] = useState({
+    name:"",
+    imageSrc:"",
+    description:"",
+    ingredients:[""],
+    steps:"",
+    author:"",
+  });
+  const handleCalendarClick = (click:any) => {
+    firestore.collection("recipes").doc(click.event.title).get().then((doc)=>{
+      if (doc.exists){
+        const docData = doc.data()
+        if (docData !== undefined){
+          setModalRecipe({
+            name: docData.name,
+            imageSrc: docData.imageSrc,
+            description: docData.description,
+            ingredients: docData.ingredients,
+            steps: docData.steps,
+            author: docData.author,
+          })
+          setNumberOfClicks(numberOfClicks+1)
+        }
+      }
+    }).catch((error)=>{
+      console.log(error)
+    })
+
+  };
   const calendar = (
     <Container style={{ marginTop: "20px", height: "90vh" }}>
       <FullCalendar
@@ -226,7 +266,7 @@ const Plan = () => {
         events={getFormattedEvents(events)}
         firstDay={1}
         height={"100%"}
-        eventClick={(click) => console.log(click)}
+        eventClick={(click) => handleCalendarClick(click)}
       />
     </Container>
   );
@@ -236,6 +276,7 @@ const Plan = () => {
       <TopNav />
       {events.length < 1 ? "" : calendar}
       {form}
+      {(modalRecipe.name !=="")?<PlanRecipes clicks = {numberOfClicks} recipe={modalRecipe} />: ""}
     </div>
   );
 };
