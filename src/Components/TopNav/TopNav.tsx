@@ -172,9 +172,6 @@ const TopNav = (props: Props) => {
       <Menu color="teal" pointing secondary stackable>
         {Links}
         <Menu.Menu position="right">
-          {/* <Menu.Item>
-            <Input icon="search" placeholder="Search..." color="teal" />
-          </Menu.Item> */}
           <Menu.Item>
             <Button
               icon
