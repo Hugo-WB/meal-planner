@@ -176,6 +176,16 @@ const TopNav = (props: Props) => {
             <Input icon="search" placeholder="Search..." color="teal" />
           </Menu.Item> */}
           <Menu.Item>
+            <Button
+              icon
+              labelPosition="left"
+              href="https://github.com/Hugo-WB/meal-planner"
+            >
+              Source Code
+              <Icon name="github"></Icon>
+            </Button>
+          </Menu.Item>
+          <Menu.Item>
             <AddRecipeModal />
           </Menu.Item>
           <Menu.Item position="right">

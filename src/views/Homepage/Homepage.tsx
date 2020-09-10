@@ -19,7 +19,7 @@ import "./Homepage.css";
 import FullLogo from "../../Components/Logos/FullLogo";
 import rectangleLogo from "../../assets/rectangleLogo.png";
 import recipes from "../../assets/recipes.png";
-import plan from "../../assets/plan.png"
+import plan from "../../assets/plan.png";
 
 export default function Homepage() {
   const history = useHistory();
@@ -108,11 +108,24 @@ export default function Homepage() {
           />
           <Grid.Row columns="equal" textAlign="center" id="secondRow">
             <Grid.Column>
-              <Image src={plan}/>
+              <Image src={plan} />
             </Grid.Column>
             <Grid.Column width={3}>
               <Header size="huge">Bespoke weekly plans</Header>
               <p>Automatically Generated according to your preferences</p>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row columns="equal" textAlign="center" id="thirdRow">
+            <Grid.Column>
+              <Button
+                size="huge"
+                icon
+                labelPosition="left"
+                href="https://github.com/Hugo-WB/meal-planner"
+              >
+                Source Code
+                <Icon name="github"></Icon>
+              </Button>
             </Grid.Column>
           </Grid.Row>
         </Grid>
