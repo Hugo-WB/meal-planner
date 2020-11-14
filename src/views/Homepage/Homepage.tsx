@@ -41,8 +41,6 @@ export default function Homepage() {
           width: "100vw",
           height: "100vh",
           backgroundColor: "white",
-          // backgroundImage:
-          //   "url(" + "http://lorempixel.com/1920/1080/food/" + ")",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
         }}

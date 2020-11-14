@@ -34,13 +34,9 @@ const Recipes: React.FC<Props> = () => {
   return (
     <div>
       <TopNav />
-      {/* <Container style={{ marginTop: "3em" }}> */}
-      {/* <Grid stackable centered veritcalAlign="middle">
-        </Grid> */}
       <Card.Group centered stackable doubling style={{ marginTop: "10px" }}>
         <RecipeCards />
       </Card.Group>
-      {/* </Container> */}
     </div>
   );
 };

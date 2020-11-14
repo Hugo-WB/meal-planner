@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { createStore } from "redux";
 import "semantic-ui-css/semantic.min.css";
 
+// in .gitignore, won't be on github
 import firebase from "./firebase";
 import "firebase/firestore";
 import { ReactReduxFirebaseProvider } from "react-redux-firebase";
@@ -18,6 +19,7 @@ const rrfConfig = {
 };
 
 const initialState = {};
+// create react redux store
 const store = createStore(rootReducer, initialState);
 const rrfProps = {
   firebase,
@@ -44,3 +46,4 @@ ReactDOM.render(
 //TODO: Get name from authentification
 //TODO: ADD recipes using web scraping python maybe? or JS
 //TODO do something with ML estimate price of recipe using ML
+// TODO: increase security of react router

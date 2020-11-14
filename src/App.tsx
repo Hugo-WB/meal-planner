@@ -3,7 +3,6 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch } from "react-router-dom";
 
 import Homepage from "./views/Homepage/Homepage";
-import Dashboard from "./views/Dashboard/Dashboard";
 import Recipes from "./views/Recipes/Recipes";
 import Plan from "./views/Plan/Plan";
 import Authenticate from "./views/Authenticate/Authenticate";
@@ -27,22 +26,12 @@ const App = () => {
   useFirestoreConnect({collection:"recipes",where:["meal","==","dinner"],storeAs:"dinnerRecipes"})
   useFirestoreConnect({ collection: "recipes"});
 
-  const unsecureRoutes:route[]=[
-    {
-      path: "/authenticate",
-      component: Authenticate,
-    },
-    {
-      path:"*",
-      component:Homepage,
-    }
-    
-  ]
+
   let db = firebase.firestore();
   const dispatch = useDispatch();
 
   const loggedIn = useSelector((state:RootState)=>state.localData.loggedIn)
-
+  // Updated local redux store depending on whether the user is logged in or not
   firebase.auth().onAuthStateChanged((user) => {
     if (user != null) {
       dispatch({
@@ -56,12 +45,25 @@ const App = () => {
     }
   });
 
+  // React Router routes shown when not logged in
+  const unsecureRoutes:route[]=[
+    {
+      path: "/authenticate",
+      component: Authenticate,
+    },
+    {
+      path:"*",
+      component:Homepage,
+    }
+  ]
+    
   const unsecureRoutesJSX = (
     unsecureRoutes.map((route) => (
       <Route path={route.path} component={route.component} exact={true} />
     ))
 
   )
+  // React Router routes when logged in
   const secureRoutes: route[] = [
     {
       path: "/recipes",
@@ -89,35 +91,5 @@ const App = () => {
     </div>
   );
 };
-
-// const SecureRoutes = () =>{
-//   // let {path,url} = useRouteMatch()
-//   const secureRoutes: route[] = [
-//     {
-//       path: "/dashboard",
-//       component: Dashboard,
-//     },
-//     {
-//       path: "/recipes",
-//       component: Recipes,
-//     },
-//     {
-//       path: "/plan",
-//       component: Plan,
-//     },
-//   ];
-//   const secureRoutesJSX = (
-//     secureRoutes.map((route) => (
-//       <Route path={route.path} component={route.component} exact={true} />
-//     ))
-//   )
-//   return (
-//     <div>
-//       {secureRoutesJSX}
-
-//     </div>
-//   )
-
-// }
 
 export default connect()(App);

@@ -65,6 +65,7 @@ const Plan = () => {
     } catch (error) {}
   }, [user, events.length]);
 
+  // choose random recipes and create the plan
   const generateEvents = (): Events => {
     let events: Events = [];
     let mealTimes: [number, number][][] = [
