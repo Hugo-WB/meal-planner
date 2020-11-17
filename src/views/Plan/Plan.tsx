@@ -55,7 +55,7 @@ const Plan = () => {
   const dinnerRecipes = useSelector(
     (state: RootState) => state.firestore.data.dinnerRecipes
   );
-
+  // Check if firestore has events that are already generated.
   useEffect(() => {
     try {
       let tempEvents = user[0].events;
@@ -149,6 +149,7 @@ const Plan = () => {
     return events;
   };
 
+  // Takes events and formats them for the calendar
   const getFormattedEvents = (unformatted: Events): FormattedEvents => {
     let output: any[] = [];
     let now = new Date();
@@ -181,7 +182,6 @@ const Plan = () => {
 
       output = output.concat(formattedEvent);
     }
-    // console.log(output);
     return output;
   };
   const handleChange = (e: React.FormEvent<HTMLInputElement>, data: any) => {

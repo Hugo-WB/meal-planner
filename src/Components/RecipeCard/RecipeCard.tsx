@@ -24,6 +24,7 @@ export default function RecipeCard(props: Props): ReactElement {
   const [showRecipe, setShowRecipe] = useState(false);
   const [showUser, setShowUser] = useState(false);
 
+  // RECIPE POPUP:
   const Recipe = (
     <Modal open={showRecipe} closeIcon onClose={() => setShowRecipe(false)}>
       <Modal.Header>
@@ -52,6 +53,7 @@ export default function RecipeCard(props: Props): ReactElement {
     </Modal>
   );
 
+  // User POPUP:
   const User = (
     <Modal open={showUser} onClose={() => setShowUser(false)} closeIcon>
       <Modal.Header>{props.author}</Modal.Header>

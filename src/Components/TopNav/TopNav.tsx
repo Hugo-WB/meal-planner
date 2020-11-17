@@ -28,7 +28,65 @@ import {
 
 interface Props {}
 
+const TopNav = (props: Props) => {
+
+  const location = useLocation();
+  const links: string[] = ["plan", "recipes"];
+  const history = useHistory();
+  // JSX for the links:
+  const Links = links.map((link) => (
+    <Link to={"/" + link} key={link}>
+      <Menu.Item link active={location.pathname === "/" + link}>
+        {link.charAt(0).toUpperCase() + link.slice(1)}
+      </Menu.Item>
+    </Link>
+  ));
+
+  const signOut = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        history.push("/");
+      })
+      .catch((error: any) => {
+        alert(error.message);
+      });
+  };
+  const user = useSelector((state: RootState) => state.localData.user);
+
+  return (
+    <div>
+      <Menu color="teal" pointing secondary stackable>
+        {Links}
+        <Menu.Menu position="right">
+          <Menu.Item>
+            <Button
+              icon
+              labelPosition="left"
+              href="https://github.com/Hugo-WB/meal-planner"
+            >
+              Source Code
+              <Icon name="github"></Icon>
+            </Button>
+          </Menu.Item>
+          <Menu.Item>
+            <AddRecipeModal />
+          </Menu.Item>
+          <Menu.Item position="right">
+            <Button fluid color="red" align="center" onClick={signOut}>
+              Sign Out
+            </Button>
+          </Menu.Item>
+        </Menu.Menu>
+      </Menu>
+    </div>
+  );
+};
+
+
 const AddRecipeModal = () => {
+  // Button and Modal (Pop-up) to Add Recipe
   const firestore = useFirestore();
   const history = useHistory();
   const [open, setOpen] = useState(false); //For the Modal for creating a new recipe
@@ -39,6 +97,7 @@ const AddRecipeModal = () => {
     ingredients: [],
     steps: "",
   });
+  // map state to the input
   const handleChange = (event: any) => {
     const name = event.target.name;
     let value = event.target.value;
@@ -49,9 +108,10 @@ const AddRecipeModal = () => {
       ...recipe,
       [name]: value,
     });
-    console.log(recipe);
   };
   const submit = () => {
+    // Validity Check:
+    // Image Validity
     const imageExists = (url: string) => {
       var http = new XMLHttpRequest();
       http.open("HEAD", url, false);
@@ -59,6 +119,7 @@ const AddRecipeModal = () => {
       return http.status !== 404;
     };
 
+    // Text Validity
     if (
       recipe.name.length > 0 &&
       recipe.description.length > 0 &&
@@ -138,61 +199,6 @@ const AddRecipeModal = () => {
         </Button>
       </Modal.Actions>
     </Modal>
-  );
-};
-
-const TopNav = (props: Props) => {
-
-  const location = useLocation();
-  const links: string[] = ["plan", "recipes"];
-  const history = useHistory();
-  const Links = links.map((link) => (
-    <Link to={"/" + link} key={link}>
-      <Menu.Item link active={location.pathname === "/" + link}>
-        {link.charAt(0).toUpperCase() + link.slice(1)}
-      </Menu.Item>
-    </Link>
-  ));
-
-  const signOut = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        history.push("/");
-      })
-      .catch((error: any) => {
-        alert(error.message);
-      });
-  };
-  const user = useSelector((state: RootState) => state.localData.user);
-
-  return (
-    <div>
-      <Menu color="teal" pointing secondary stackable>
-        {Links}
-        <Menu.Menu position="right">
-          <Menu.Item>
-            <Button
-              icon
-              labelPosition="left"
-              href="https://github.com/Hugo-WB/meal-planner"
-            >
-              Source Code
-              <Icon name="github"></Icon>
-            </Button>
-          </Menu.Item>
-          <Menu.Item>
-            <AddRecipeModal />
-          </Menu.Item>
-          <Menu.Item position="right">
-            <Button fluid color="red" align="center" onClick={signOut}>
-              Sign Out
-            </Button>
-          </Menu.Item>
-        </Menu.Menu>
-      </Menu>
-    </div>
   );
 };
 

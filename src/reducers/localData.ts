@@ -1,4 +1,5 @@
 import {LocalData} from "../types"
+
 const initialState: LocalData = {
   currentPage: "Dashboard",
   loggedIn:false,
